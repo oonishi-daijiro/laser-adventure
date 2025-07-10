@@ -8,6 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LaserRoom.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: c778f97ac5f2a2743a2817df1f2276e3
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 13dc34878d5dfee48bd5f8816c5d0644, type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: 00a09ef8b894cd8499328e8a79ccde61, type: 2}

@@ -1,5 +1,5 @@
 using System;
-using Unity.VisualScripting;
+using System.Collections.Generic;
 using UnityEngine;
 
 interface IFunctional
@@ -35,7 +35,7 @@ class ZeroFunc : IFunctional
 
 public class LaserMover : MonoBehaviour
 {
-    private IFunctional[] functions;
+    private Dictionary<String, IFunctional> funcMap;
 
     public String XfuncName;
     public String YfuncName;
@@ -43,14 +43,19 @@ public class LaserMover : MonoBehaviour
 
     private float t = 0;
     public float dt;
+    [SerializeField] float theta;
     [SerializeField, Range(-1f, 1f)] float r;
 
     void Start()
     {
-        functions = new IFunctional[3];
-        functions[0] = new SinFunc();
-        functions[1] = new CosFunc();
-        functions[2] = new ZeroFunc();
+        funcMap = new Dictionary<string, IFunctional>
+        {
+            { "sin", new SinFunc() },
+            { "cos", new CosFunc() },
+            { "zero", new ZeroFunc() },
+            { "", new ZeroFunc() }
+
+        };
     }
 
     // Update is called once per frame
@@ -59,24 +64,9 @@ public class LaserMover : MonoBehaviour
         var x = transform.position.x;
         var y = transform.position.y;
         var z = transform.position.z;
-        var pos = new Vector3(x + (r * GetFunc(XfuncName).Invoke(t)), y + (r * GetFunc(YfuncName).Invoke(t)), z + (r * GetFunc(ZfuncName).Invoke(t)));
+        var pos = new Vector3(x + (r * funcMap[XfuncName].Invoke(t + theta)), y + (r * funcMap[YfuncName].Invoke(t + theta)), z + (r * funcMap[ZfuncName].Invoke(t + theta)));
         gameObject.transform.position = pos;
         t += dt;
     }
 
-    IFunctional GetFunc(String name)
-    {
-        if (name == "sin")
-        {
-            return functions[0];
-        }
-        else if (name == "cos")
-        {
-            return functions[1];
-        }
-        else
-        {
-            return functions[2];
-        }
-    }
 }

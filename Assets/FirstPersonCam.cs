@@ -24,18 +24,17 @@ public class FirstPersonCam : MonoBehaviour
 
     void LateUpdate()
     {
-        var pos = playerHead.transform.position;
-        horizonalRotAngle += mouseDelta.x;
+        // var pos = playerHead.transform.position;
+        // horizonalRotAngle += mouseDelta.x;
 
-        var newVerticalRotationAngle = verticalRotAngle + mouseDelta.y * -0.2f;
-        if (-90 < newVerticalRotationAngle && newVerticalRotationAngle < 90)
-        {
-            verticalRotAngle = newVerticalRotationAngle;
-        }
-        cam.transform.rotation = Quaternion.Euler(verticalRotAngle, horizonalRotAngle, 0);
-
+        // var newVerticalRotationAngle = verticalRotAngle + mouseDelta.y * -0.2f;
+        // if (-90 < newVerticalRotationAngle && newVerticalRotationAngle < 90)
+        // {
+        //     verticalRotAngle = newVerticalRotationAngle;
+        // }
+        cam.transform.rotation = playerHead.transform.rotation;
         // pos.y += 0.2f;
         // pos.z += 0.8f;
-        cam.transform.position = pos;
+        cam.transform.position = playerHead.transform.position;
     }
 }
