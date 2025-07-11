@@ -16,15 +16,10 @@ public class RemainSecTimer : MonoBehaviour
     void Start()
     {
         timer = gameObject.GetComponent<Timer>();
-        timerText = gameObject.GetComponent<TextMeshProUGUI>();
         remainSec = min * 60 + sec;
         timer.AddPerSecListenner(UpdateTimerText);
     }
 
-    void Update()
-    {
-
-    }
 
     (int, int) Sec2Min(int seconds)
     {
