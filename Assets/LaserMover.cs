@@ -2,40 +2,11 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-interface IFunctional
-{
-    float Invoke(float t);
-};
-
-class SinFunc : IFunctional
-{
-    public float Invoke(float t)
-    {
-        return Mathf.Sin(t);
-    }
-};
-
-
-
-class CosFunc : IFunctional
-{
-    public float Invoke(float t)
-    {
-        return Mathf.Cos(t);
-    }
-}
-
-class ZeroFunc : IFunctional
-{
-    public float Invoke(float _)
-    {
-        return 0;
-    }
-}
-
 public class LaserMover : MonoBehaviour
 {
-    private Dictionary<String, IFunctional> funcMap;
+    delegate float fun(float v);
+
+    private Dictionary<string, fun> funcMap;
 
     public String XfuncName;
     public String YfuncName;
@@ -48,12 +19,12 @@ public class LaserMover : MonoBehaviour
 
     void Start()
     {
-        funcMap = new Dictionary<string, IFunctional>
+        funcMap = new Dictionary<string, fun>
         {
-            { "sin", new SinFunc() },
-            { "cos", new CosFunc() },
-            { "zero", new ZeroFunc() },
-            { "", new ZeroFunc() }
+            { "sin", MathF.Sin },
+            { "cos", Mathf.Cos },
+            { "zero", v => {return 0.0f; } },
+            { "", v=>{return 0.0f; } }
 
         };
     }
@@ -64,7 +35,7 @@ public class LaserMover : MonoBehaviour
         var x = transform.position.x;
         var y = transform.position.y;
         var z = transform.position.z;
-        var pos = new Vector3(x + (r * funcMap[XfuncName].Invoke(t + theta)), y + (r * funcMap[YfuncName].Invoke(t + theta)), z + (r * funcMap[ZfuncName].Invoke(t + theta)));
+        var pos = new Vector3(x + (r * funcMap[XfuncName](t + theta)), y + (r * funcMap[YfuncName](t + theta)), z + (r * funcMap[ZfuncName](t + theta)));
         gameObject.transform.position = pos;
         t += dt;
     }
