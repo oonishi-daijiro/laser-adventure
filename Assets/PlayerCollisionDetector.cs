@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerCollisionDetector : MonoBehaviour
+public class PlayerCollisionDetector : LaserAdventureGame
 {
     [SerializeField] public AudioSource se;
 
@@ -9,6 +9,7 @@ public class PlayerCollisionDetector : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             se.PlayOneShot(se.clip);
+            DecreasePlayerLives();
         }
     }
 

@@ -7,7 +7,7 @@ public class TrackRangeContoroller : MonoBehaviour
 
     void Update()
     {
-        if (!(min < gameObject.transform.position.z && gameObject.transform.position.z < max))
+        if (!(min < Mathf.Abs(gameObject.transform.position.z) && Mathf.Abs(gameObject.transform.position.z) < max))
         {
             gameObject.transform.position = new Vector3(0, -10, 0);
         }

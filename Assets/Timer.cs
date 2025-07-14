@@ -8,7 +8,7 @@ public class Timer : MonoBehaviour
 
     private List<listenner> listenners;
 
-    void Start()
+    void Awake()
     {
         Debug.Log("construct timer");
         listenners = new List<listenner>();
