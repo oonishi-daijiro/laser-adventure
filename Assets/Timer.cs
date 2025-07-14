@@ -10,6 +10,7 @@ public class Timer : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("construct timer");
         listenners = new List<listenner>();
     }
 

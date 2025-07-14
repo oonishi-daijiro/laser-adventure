@@ -15,6 +15,7 @@ public class RemainSecTimer : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("construct remain timer");
         timer = gameObject.GetComponent<Timer>();
         remainSec = min * 60 + sec;
         timer.AddPerSecListenner(UpdateTimerText);
