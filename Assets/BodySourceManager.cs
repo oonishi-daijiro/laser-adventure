@@ -2,40 +2,44 @@ using UnityEngine;
 using System.Collections;
 using Windows.Kinect;
 
-public class BodySourceManager : MonoBehaviour 
+public class BodySourceManager : LaserAdventureGame
 {
     private KinectSensor _Sensor;
     private BodyFrameReader _Reader;
     private Body[] _Data = null;
-    
+
     public Body[] GetData()
     {
         return _Data;
     }
-    
 
-    void Start () 
+
+    void Start()
     {
         _Sensor = KinectSensor.GetDefault();
 
         if (_Sensor != null)
         {
             _Reader = _Sensor.BodyFrameSource.OpenReader();
-            
+
             if (!_Sensor.IsOpen)
             {
                 _Sensor.Open();
             }
-        }   
+        }
+        else
+        {
+            SetKinectStat(KinectStatus.Error);
+        }
     }
 
     public Windows.Kinect.Vector4 FloorClipPlane
     {
-      get;
-      private set;
-    } 
+        get;
+        private set;
+    }
 
-    void Update () 
+    void Update()
     {
         if (_Reader != null)
         {
@@ -46,17 +50,22 @@ public class BodySourceManager : MonoBehaviour
                 {
                     _Data = new Body[_Sensor.BodyFrameSource.BodyCount];
                 }
-                
+
                 frame.GetAndRefreshBodyData(_Data);
-                
+
                 FloorClipPlane = frame.FloorClipPlane;
 
                 frame.Dispose();
                 frame = null;
             }
-        }    
+        }
+        else
+        {
+            SetKinectStat(KinectStatus.Error);
+        }
+
     }
-    
+
     void OnApplicationQuit()
     {
         if (_Reader != null)
@@ -64,14 +73,14 @@ public class BodySourceManager : MonoBehaviour
             _Reader.Dispose();
             _Reader = null;
         }
-        
+
         if (_Sensor != null)
         {
             if (_Sensor.IsOpen)
             {
                 _Sensor.Close();
             }
-            
+
             _Sensor = null;
         }
     }

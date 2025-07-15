@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TrackRangeContoroller : MonoBehaviour
+public class TrackRangeContoroller : LaserAdventureGame
 {
     [SerializeField] public float min;
     [SerializeField] public float max;

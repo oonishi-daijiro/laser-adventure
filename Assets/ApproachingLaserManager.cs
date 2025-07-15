@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ApproachingLaserManager : MonoBehaviour
+public class ApproachingLaserManager : LaserAdventureGame
 {
     [SerializeField]
     public GameObject origin;
@@ -56,9 +56,9 @@ public class ApproachingLaserManager : MonoBehaviour
 
     void Update()
     {
-        if (ShouldInstantieateNewLaser())
+        if (GetGameState() == GameState.PlayingApproachingPostureLaser && ShouldInstantieateNewLaser())
         {
-            Instantiate(origianlLaser).GetComponent<ApproachingLaser>().Initialize(RandomEulerRotation(), RandomPos(),speed);
+            Instantiate(origianlLaser).GetComponent<ApproachingLaser>().Initialize(RandomEulerRotation(), RandomPos(), speed);
         }
     }
 }

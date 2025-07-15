@@ -1,24 +1,17 @@
-using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class RemainSecTimer : MonoBehaviour
+public class UserIntaface : LaserAdventureGame
 {
-    [SerializeField] int min;
-    [SerializeField] int sec;
-    [SerializeField] TextMeshProUGUI outTxtGui;
-
-    Timer timer;
-    private String timerText;
-    private int remainSec;
+    [SerializeField] Timer timer;
+    [SerializeField] TextMeshProUGUI outTxt;
+    private string timerText;
+    int remainSec;
 
     void Start()
     {
-        Debug.Log("construct remain timer");
-        timer = gameObject.GetComponent<Timer>();
-        remainSec = min * 60 + sec;
         timer.AddPerSecListenner(UpdateTimerText);
+        remainSec = GetTimeLimitSec();
     }
 
     (int, int) Sec2Min(int seconds)
@@ -28,9 +21,14 @@ public class RemainSecTimer : MonoBehaviour
         return (min, s);
     }
 
-    void FormatLivesAndTimerText(String timerTxt,String livesTxt)
+    string FormatLivesAndTimerText()
     {
-        
+        return $"{timerText} lives:{GetPlayerLives()}";
+    }
+
+    void Update()
+    {
+        outTxt.text = FormatLivesAndTimerText();
     }
 
     void UpdateTimerText()

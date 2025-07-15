@@ -6,14 +6,15 @@ using UnityEngine;
 using Windows.Kinect;
 
 
-public class KinectContoroller : MonoBehaviour {
+public class KinectContoroller : LaserAdventureGame
+{
     [SerializeField]
     BodySourceManager bodySourceManager;
 
     //自分の関節とUnityちゃんのボーンを入れるよう
     [SerializeField] GameObject Ref;
-    [SerializeField] GameObject LeftUpLeg; 
-    [SerializeField] GameObject LeftLeg; 
+    [SerializeField] GameObject LeftUpLeg;
+    [SerializeField] GameObject LeftLeg;
     [SerializeField] GameObject RightUpLeg;
     [SerializeField] GameObject RightLeg;
     [SerializeField] GameObject Spine1;
@@ -25,18 +26,17 @@ public class KinectContoroller : MonoBehaviour {
     [SerializeField] GameObject RightHand;
 
 
-    // Use this for initialization
-    void Start()
-    {
-    }
-
     // Update is called once per frame
-    void FixedUpdate () {
+    void FixedUpdate()
+    {
         //最初に追尾している人のBodyデータを取得する
         Body[] bodies = bodySourceManager.GetData();
-        if(bodies == null){
+        if (bodies == null)
+        {
+            SetKinectStat(KinectStatus.OutOfRange);
             return;
         }
+
         Body body = bodies.FirstOrDefault(b => b.IsTracked);
 
         // Kinectを斜めに置いてもまっすぐにするようにする
@@ -62,12 +62,11 @@ public class KinectContoroller : MonoBehaviour {
 
         Quaternion q;
         Quaternion comp2;
-        CameraSpacePoint pos;
-        // 関節の回転を取得する
+
         if (body != null)
         {
+            SetKinectStat(KinectStatus.Tracking);
             var joints = body.JointOrientations;
-
             //Kinectの関節回転情報をUnityのクォータニオンに変換
             SpineBase = joints[JointType.SpineBase].Orientation.ToQuaternion(comp);
             SpineMid = joints[JointType.SpineMid].Orientation.ToQuaternion(comp);
