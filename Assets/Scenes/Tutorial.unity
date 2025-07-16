@@ -1321,7 +1321,7 @@ GameObject:
   - component: {fileID: 999202353}
   m_Layer: 0
   m_Name: Laser1
-  m_TagString: Untagged
+  m_TagString: Laser
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2762,6 +2762,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 838639905045998916, guid: ae6995f0112ae4841a90ac87eb158c32, type: 3}
       propertyPath: m_Name
+      value: Laser
+      objectReference: {fileID: 0}
+    - target: {fileID: 838639905045998916, guid: ae6995f0112ae4841a90ac87eb158c32, type: 3}
+      propertyPath: m_TagString
       value: Laser
       objectReference: {fileID: 0}
     - target: {fileID: 4723962923129099806, guid: ae6995f0112ae4841a90ac87eb158c32, type: 3}
