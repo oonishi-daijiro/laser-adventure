@@ -12,6 +12,7 @@ public class UserIntaface : LaserAdventureGame
     {
         timer.AddPerSecListenner(UpdateTimerText);
         remainSec = GetTimeLimitSec();
+        timerText = "";
     }
 
     (int, int) Sec2Min(int seconds)
@@ -23,11 +24,12 @@ public class UserIntaface : LaserAdventureGame
 
     string FormatLivesAndTimerText()
     {
-        return $"{timerText} lives:{GetPlayerLives()}";
+        return $"{timerText} \nlives:{GetPlayerLives()}";
     }
 
     void Update()
     {
+        Debug.Log(GetDebugGameState());
         outTxt.text = FormatLivesAndTimerText();
     }
 

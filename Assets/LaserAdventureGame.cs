@@ -5,7 +5,8 @@ public class LaserAdventureGame : MonoBehaviour
 {
     private static LaserAdventureGame _instance = null;
     public static LaserAdventureGame SingletonInstance { get { return _instance; } }
-    private GameObject playerBody;
+
+    private Vector3 playerPos;
 
     void Awake()
     {
@@ -23,7 +24,7 @@ public class LaserAdventureGame : MonoBehaviour
     {
         Yet,
         Playing,
-        HMDLaser,
+        PlayingHMDLaser,
         PlayingApproachingPostureLaser,
         PlayingPostureLaser,
         Completed,
@@ -56,7 +57,7 @@ public class LaserAdventureGame : MonoBehaviour
 
     protected GameState GetGameState()
     {
-        return state;
+        return SingletonInstance.state;
     }
 
     protected void DecreasePlayerLives()
@@ -98,6 +99,46 @@ public class LaserAdventureGame : MonoBehaviour
         var gameStateStr = GetGameState().ToString();
         var kinectStateStr = GetKinectStat().ToString();
 
-        return $"gamestete:{gameStateStr} kinectstate:{kinectStateStr}";
+        return $"gamestete:{gameStateStr}\n kinectstate:{kinectStateStr}";
     }
+
+    protected void SetPlayerPos(float x, float y, float z)
+    {
+        SingletonInstance.playerPos.x = x;
+        SingletonInstance.playerPos.y = y;
+        SingletonInstance.playerPos.z = z;
+        Debug.Log($"{x} {y} {z}");
+
+        if (7 < MathF.Abs(z) && MathF.Abs(z) < 100)
+        {
+            SetGameState(GameState.PlayingHMDLaser);
+
+        }
+        else if (MathF.Abs(z) <= 7)
+        {
+            if (GetKinectStat() == KinectStatus.Tracking)
+            {
+                SetGameState(GameState.PlayingPostureLaser);
+            }
+            else
+            {
+                Debug.Log("inside the kinect range but not tracking?");
+            }
+        }
+    }
+
+
+    protected Vector3 GetPlayerPos()
+    {
+        return SingletonInstance.playerPos;
+    }
+    // protected GameObject GetPlayerBody()
+    // {
+    //     return SingletonInstance.playerBody;
+    // }
+
+    // protected void SetPlayerBody(GameObject player)
+    // {
+    //     SingletonInstance.playerBody = player;
+    // }
 }
