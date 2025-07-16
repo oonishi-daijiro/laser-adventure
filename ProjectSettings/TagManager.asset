@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Floor
   - Laser
+  - Treasure
   layers:
   - Default
   - TransparentFX

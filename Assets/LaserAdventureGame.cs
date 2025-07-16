@@ -118,11 +118,7 @@ public class LaserAdventureGame : MonoBehaviour
         {
             if (GetKinectStat() == KinectStatus.Tracking)
             {
-                SetGameState(GameState.PlayingPostureLaser);
-            }
-            else
-            {
-                Debug.Log("inside the kinect range but not tracking?");
+                SetGameState(GameState.PlayingApproachingPostureLaser);
             }
         }
     }

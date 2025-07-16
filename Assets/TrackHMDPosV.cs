@@ -8,5 +8,9 @@ public class TrackHMDPosV : LaserAdventureGame
         {
             gameObject.transform.position = GetPlayerPos();
         }
+        else
+        {
+            gameObject.transform.position = new Vector3(1, 100, 1);
+        }
     }
 }
