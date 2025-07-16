@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CylinderSpawner : MonoBehaviour
+public class CylinderSpawner2 : MonoBehaviour
 {
     public GameObject cylinderOriginal;        // 元Cylinder（非表示）
     public float moveSpeed = 5.0f;             // 移動速度
@@ -19,7 +19,7 @@ public class CylinderSpawner : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             SpawnCylinder();
         }

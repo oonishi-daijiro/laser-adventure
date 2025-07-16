@@ -23,7 +23,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4723962923129099806
 Transform:
   m_ObjectHideFlags: 0
@@ -171,10 +171,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a02dbb6804bf7740b15c5cfc78db822, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveDirection: {x: 0, y: 0, z: -1}
   speed: 5
-  lifeTime: 3
-  size: {x: 0.05, y: 6, z: 0.05}
+  moveDirection: {x: 0, y: 0, z: -1}
 --- !u!114 &7993113878778913452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,10 +185,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e320ce599a58e147bd0a26620c09535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cylinderPrefab: {fileID: 0}
+  cylinderOriginal: {fileID: 0}
+  moveSpeed: 5
   spawnPosition: {x: 0, y: 0, z: 5}
-  moveDirection: {x: 0, y: 0, z: -1}
-  cylinderSize: {x: 1, y: 2, z: 1}
+  rotationAroundZ: 0
 --- !u!82 &-3759844306819124810
 AudioSource:
   m_ObjectHideFlags: 0
