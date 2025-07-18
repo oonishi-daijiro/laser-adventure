@@ -3,7 +3,7 @@ using UnityEngine;
 public class ApproachingLaser : MonoBehaviour
 {
     [SerializeField] private float speed;
-    
+
     void Update()
     {
         var newPos = gameObject.transform.position;
@@ -20,5 +20,6 @@ public class ApproachingLaser : MonoBehaviour
         gameObject.transform.rotation = rotation;
         gameObject.transform.position = pos;
         this.speed = speed;
+        gameObject.tag = "Laser";
     }
 }

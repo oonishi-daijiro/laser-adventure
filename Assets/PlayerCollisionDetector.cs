@@ -2,21 +2,21 @@ using UnityEngine;
 
 public class PlayerCollisionDetector : LaserAdventureGame
 {
-    [SerializeField] public AudioSource se;
+    bool isAlreadyTriggered = false;
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && gameObject.CompareTag("Laser"))
+        Debug.Log($"trigger enter{gameObject.tag} {other.tag}");
+
+        if (other.CompareTag("Player") && gameObject.CompareTag("Laser") && !isAlreadyTriggered)
         {
-            se.PlayOneShot(se.clip);
+            Debug.Log("trigger entered with laser and player");
             DecreasePlayerLives();
+            isAlreadyTriggered = true;
         }
         else if (other.CompareTag("Player") && gameObject.CompareTag("Treasure"))
         {
-            se.PlayOneShot(se.clip);
             // some socre method needed.
         }
-
     }
-
 }

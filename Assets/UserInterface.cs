@@ -29,7 +29,7 @@ public class UserIntaface : LaserAdventureGame
 
     void Update()
     {
-        Debug.Log(GetDebugGameState());
+        // Debug.Log(GetDebugGameState());
         outTxt.text = FormatLivesAndTimerText();
     }
 

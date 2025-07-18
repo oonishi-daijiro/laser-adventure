@@ -6,6 +6,12 @@ public class LaserAdventureGame : MonoBehaviour
     private static LaserAdventureGame _instance = null;
     public static LaserAdventureGame SingletonInstance { get { return _instance; } }
 
+    public enum SEKinds
+    {
+        LaserColl,
+        Cash
+    }
+
     private Vector3 playerPos;
 
     void Awake()
@@ -16,7 +22,7 @@ public class LaserAdventureGame : MonoBehaviour
         }
     }
 
-    int lives = 3;
+    int lives = 15;
     private int limitMin = 30;
     private int limitSec = 0;
 
@@ -98,21 +104,20 @@ public class LaserAdventureGame : MonoBehaviour
     {
         var gameStateStr = GetGameState().ToString();
         var kinectStateStr = GetKinectStat().ToString();
-
         return $"gamestete:{gameStateStr}\n kinectstate:{kinectStateStr}";
     }
+
 
     protected void SetPlayerPos(float x, float y, float z)
     {
         SingletonInstance.playerPos.x = x;
         SingletonInstance.playerPos.y = y;
         SingletonInstance.playerPos.z = z;
-        Debug.Log($"{x} {y} {z}");
+        // Debug.Log($"{x} {y} {z}");
 
         if (7 < MathF.Abs(z) && MathF.Abs(z) < 100)
         {
             SetGameState(GameState.PlayingHMDLaser);
-
         }
         else if (MathF.Abs(z) <= 7)
         {
@@ -128,6 +133,8 @@ public class LaserAdventureGame : MonoBehaviour
     {
         return SingletonInstance.playerPos;
     }
+
+
     // protected GameObject GetPlayerBody()
     // {
     //     return SingletonInstance.playerBody;

@@ -10,7 +10,7 @@ public class TrackHMDPosV : LaserAdventureGame
         }
         else
         {
-            gameObject.transform.position = new Vector3(1, 100, 1);
+            gameObject.transform.position = new Vector3(1, -100, 1);
         }
     }
 }

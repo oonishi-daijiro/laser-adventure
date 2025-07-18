@@ -113,5 +113,9 @@ public class KinectContoroller : LaserAdventureGame
             // モデルの回転を設定する
             transform.rotation = q;
         }
+        else
+        {
+            SetKinectStat(KinectStatus.OutOfRange);
+        }
     }
 }

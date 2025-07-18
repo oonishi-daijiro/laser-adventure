@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ApproachingLaserManager : LaserAdventureGame
@@ -10,34 +12,18 @@ public class ApproachingLaserManager : LaserAdventureGame
     [SerializeField] public float speed;
     private float nextInstantiateTime = 0;
     private float currentTime = 0;
-
-    [SerializeField, Range(0f, 1.0f)] float XRange;
-    [SerializeField, Range(0f, 1.0f)] float YRange;
-    [SerializeField, Range(0f, 1.0f)] float ZRange;
-
-    [SerializeField, Range(0f, 360f)] float XRotationRange;
-    [SerializeField, Range(0f, 360f)] float YRotationRange;
-    [SerializeField, Range(0f, 360f)] float ZRotationRange;
+    List<Tuple<Vector3, Quaternion>> randomLaserOps;
+    System.Random rand = new();
 
     void Start()
     {
+        randomLaserOps = new();
         origianlLaser = origin.GetComponent<ApproachingLaser>();
-    }
-
-    Quaternion RandomEulerRotation()
-    {
-        var x = Random.Range(0f, XRotationRange);
-        var y = Random.Range(0f, YRotationRange);
-        var z = Random.Range(0f, ZRotationRange);
-        return Quaternion.Euler(new Vector3(x, y, z));
-    }
-
-    Vector3 RandomPos()
-    {
-        var x = Random.Range(-XRange, XRange);
-        var y = Random.Range(-YRange, YRange);
-        var z = Random.Range(-ZRange, ZRange);
-        return new Vector3(x, y, z);
+        randomLaserOps.Add(new(new Vector3(0, 0.9f, 0), Quaternion.Euler(0, 0, -100)));
+        randomLaserOps.Add(new(new Vector3(0, 0.9f, 0), Quaternion.Euler(0, 0, -86)));
+        randomLaserOps.Add(new(new Vector3(2.0f, 4.0f, 0), Quaternion.Euler(0, 0, 150)));
+        randomLaserOps.Add(new(new Vector3(2.0f, 4.0f, 0), Quaternion.Euler(0, 0, -150)));
+        randomLaserOps.Add(new(new Vector3(0, 0.9f, 0), Quaternion.Euler(0, 0, -70)));
     }
 
     bool ShouldInstantieateNewLaser()
@@ -58,7 +44,11 @@ public class ApproachingLaserManager : LaserAdventureGame
     {
         if (GetGameState() == GameState.PlayingApproachingPostureLaser && ShouldInstantieateNewLaser())
         {
-            Instantiate(origianlLaser).GetComponent<ApproachingLaser>().Initialize(RandomEulerRotation(), RandomPos(), speed);
+            var obj = Instantiate(origianlLaser);
+            var randomIndex = rand.Next(0, randomLaserOps.Count);
+            Debug.Log(randomIndex);
+            (Vector3 pos, Quaternion rot) = randomLaserOps[randomIndex];
+            obj.GetComponent<ApproachingLaser>().Initialize(rot, pos, 0.05f);
         }
     }
 }
