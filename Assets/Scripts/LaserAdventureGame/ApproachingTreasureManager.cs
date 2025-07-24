@@ -16,7 +16,7 @@ public class ApproachingTreasureManager : InvokePeriodically
             {
                 Debug.Log("Instantiate treasure");
                 var randomX = rand.Next(-1, 1);
-                comp.Initialize(Quaternion.identity, new Vector3(randomX, 0, 0), 0.01f);
+                comp.Initialize(Quaternion.identity, new Vector3(randomX, obj.transform.position.y, 0), 0.01f);
             }
             else
             {
