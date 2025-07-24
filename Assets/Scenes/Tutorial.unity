@@ -2638,7 +2638,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5325122100287181771, guid: c116b7497ab8ca34c9188965d4295e27, type: 3}
   m_PrefabInstance: {fileID: 1860036675}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1860036679
+--- !u!114 &1860036677
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
