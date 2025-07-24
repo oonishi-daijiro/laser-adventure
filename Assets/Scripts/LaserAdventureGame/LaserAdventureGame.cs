@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LaserAdventureGame : MonoBehaviour
 {
@@ -11,10 +12,22 @@ public class LaserAdventureGame : MonoBehaviour
     }
 
     static private Vector3 playerPos;
-
-    static int lives = 15;
+    static private int lives = 1500;
     static private int limitMin = 30;
     static private int limitSec = 0;
+
+    static private bool isDebug = true;
+
+    public enum TreasureScores
+    {
+        Gem = 1000, Coin = 100, Cash = 300, Gold = 500,
+    };
+
+    static private int score = 0;
+    static protected int getScore()
+    {
+        return score;
+    }
 
     protected enum GameState
     {
@@ -38,7 +51,6 @@ public class LaserAdventureGame : MonoBehaviour
 
     static private GameState state = GameState.Playing;
     static private KinectStatus kinectStat = KinectStatus.Waiting;
-
     static protected void SetGameState(GameState state)
     {
         if (state == GameState.PlayingPostureLaser)
@@ -53,14 +65,17 @@ public class LaserAdventureGame : MonoBehaviour
 
     static protected void DecreasePlayerLives()
     {
-        var lives = GetPlayerLives();
-        lives--;
-
         if (lives - 1 == 0)
         {
             SetGameState(GameState.GameOver);
         }
+        else
+        {
+            lives--;
+        }
+
     }
+
     static protected GameState GetGameState()
     {
         return state;
@@ -93,7 +108,6 @@ public class LaserAdventureGame : MonoBehaviour
         return $"gamestete:{gameStateStr}\n kinectstate:{kinectStateStr}";
     }
 
-
     static protected void SetPlayerPos(float x, float y, float z)
     {
         playerPos.x = x;
@@ -106,7 +120,7 @@ public class LaserAdventureGame : MonoBehaviour
         }
         else if (MathF.Abs(z) <= 7)
         {
-            if (GetKinectStat() == KinectStatus.Tracking)
+            if (GetKinectStat() == KinectStatus.Tracking || isDebug)
             {
                 SetGameState(GameState.PlayingApproachingPostureLaser);
             }
@@ -116,5 +130,10 @@ public class LaserAdventureGame : MonoBehaviour
     static protected Vector3 GetPlayerPos()
     {
         return playerPos;
+    }
+
+    static protected void AddScore(TreasureScores gainedScore)
+    {
+        score += (int)gainedScore;
     }
 }

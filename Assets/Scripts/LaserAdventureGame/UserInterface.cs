@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UserIntaface : LaserAdventureGame
 {
@@ -24,13 +25,22 @@ public class UserIntaface : LaserAdventureGame
 
     string FormatLivesAndTimerText()
     {
-        return $"{timerText} \nlives:{GetPlayerLives()}";
+        return $"{timerText} \nlives:{GetPlayerLives()}\n score:{getScore()}";
     }
 
     void Update()
     {
         // Debug.Log(GetDebugGameState());
         outTxt.text = FormatLivesAndTimerText();
+        if (GetGameState() == GameState.GameOver)
+        {
+            timer.SetTimeout(() =>
+                        {
+                            Debug.Log("ゲームオーバー");
+                            SceneManager.LoadScene("GameOver");
+                        }, 3);
+            SetGameState(GameState.Yet);
+        }
     }
 
     void UpdateTimerText()

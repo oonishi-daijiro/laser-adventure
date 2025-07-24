@@ -27,7 +27,7 @@ struct TimeoutCallback
 
     public void UpdateTime(float currentSec)
     {
-        if (registeredTime + timeoutSec > currentSec)
+        if (currentSec > registeredTime + timeoutSec)
         {
             callbackFunc();
             isOutdated = true;
