@@ -7,7 +7,7 @@ public class SceneSwitcher : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            SceneManager.LoadScene("Tutorial"); // ← ここを明示的に設定
+            SceneManager.LoadScene("Title"); // ← ここを明示的に設定
         }
     }
 }
