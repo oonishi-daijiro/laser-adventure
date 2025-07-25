@@ -19,6 +19,7 @@ public class LaserAdventureGame : MonoBehaviour
     private static readonly bool isDebug = false;
     static private int remainTime = limitMin * 60 + limitSec;
     protected static int approachingPostureLaserRemains = 15;
+    static protected Vector3 initialHMDPosition = new(0, 0, -9.5f);
 
     public enum TreasureScores
     {
@@ -51,7 +52,7 @@ public class LaserAdventureGame : MonoBehaviour
         Error
     };
 
-    static private GameState state = GameState.Playing;
+    static private GameState state = GameState.Yet;
     static private KinectStatus kinectStat = KinectStatus.Waiting;
 
     static protected void SetGameState(GameState state)
@@ -126,20 +127,25 @@ public class LaserAdventureGame : MonoBehaviour
         playerPos.y = y;
         playerPos.z = z;
 
-        if (7 < MathF.Abs(z) && MathF.Abs(z) < 100)
+        if (GetGameState() == GameState.Playing || GetGameState() == GameState.PlayingHMDLaser || GetGameState() == GameState.PlayingApproachingPostureLaser || GetGameState() == GameState.PlayingPostureLaser)
         {
-            SetGameState(GameState.PlayingHMDLaser);
-        }
-        else if (MathF.Abs(z) <= 8)
-        {
-            if (GetKinectStat() == KinectStatus.Tracking || isDebug)
+            if (7 < MathF.Abs(z) && MathF.Abs(z) < 100)
             {
-                if (approachingPostureLaserRemains > 0)
+                SetGameState(GameState.PlayingHMDLaser);
+            }
+            else if (MathF.Abs(z) <= 8)
+            {
+                if (GetKinectStat() == KinectStatus.Tracking || isDebug)
                 {
-                    SetGameState(GameState.PlayingApproachingPostureLaser);
+                    if (approachingPostureLaserRemains > 0)
+                    {
+                        SetGameState(GameState.PlayingApproachingPostureLaser);
+                    }
                 }
             }
         }
+
+
     }
 
     static protected Vector3 GetPlayerPos()
