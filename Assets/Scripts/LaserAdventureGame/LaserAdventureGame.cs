@@ -13,8 +13,8 @@ public class LaserAdventureGame : MonoBehaviour
 
     static private Vector3 playerPos;
     static private int lives = 1500;
-    static private int limitMin = 30;
-    static private int limitSec = 0;
+    static protected int limitMin = 30;
+    static protected int limitSec = 0;
 
     static private bool isDebug = true;
 
