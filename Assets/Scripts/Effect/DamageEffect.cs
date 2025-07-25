@@ -14,7 +14,7 @@ public class Damage : MonoBehaviour
 
     void Update()
     {
-        DamageImg.color = Color.Lerp(DamageImg.color, Color.clear, Time.deltaTime);
+        DamageImg.color = Color.Lerp(DamageImg.color, Color.clear, 10f*Time.deltaTime);
         Damaged();
     }
 
