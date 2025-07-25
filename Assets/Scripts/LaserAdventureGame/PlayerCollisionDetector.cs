@@ -8,7 +8,7 @@ public class PlayerCollisionDetector : LaserAdventureGame
     {
         var obj = gameObject.GetComponent<IPlayerCollideAble>();
 
-        if (obj != null && !false && other.gameObject.CompareTag("Player"))
+        if (obj != null && !isAlreadyTriggered && other.gameObject.CompareTag("Player"))
         {
             obj.OnCollideToPlayer();
             isAlreadyTriggered = true;

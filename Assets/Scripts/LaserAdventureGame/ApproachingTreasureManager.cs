@@ -11,18 +11,12 @@ public class ApproachingTreasureManager : InvokePeriodically
         if (GetGameState() == GameState.PlayingApproachingPostureLaser)
         {
             var obj = Instantiate(treasures[rand.Next(0, treasures.Count)]);
-            var comp = obj.GetComponent<ApproachingFromFront>();
-            if (comp != null)
-            {
-                Debug.Log("Instantiate treasure");
-                var randomX = rand.Next(-1, 1);
-                comp.Initialize(Quaternion.identity, new Vector3(randomX, obj.transform.position.y, 0), 0.01f);
-            }
-            else
-            {
-                Debug.Log("cannnot Instantiate ");
-            }
 
+            if (obj.TryGetComponent<ApproachingFromFront>(out var comp))
+            {
+                var randomX = rand.Next(-1, 1);
+                comp.Initialize(Quaternion.identity, new Vector3(randomX, obj.transform.position.y, 0), 0.01f, "Treasure");
+            }
         }
     }
 }

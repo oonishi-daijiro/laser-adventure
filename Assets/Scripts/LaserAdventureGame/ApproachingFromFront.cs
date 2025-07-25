@@ -18,12 +18,12 @@ public class ApproachingFromFront : MonoBehaviour
         }
     }
 
-    public void Initialize(Quaternion rotation, Vector3 pos, float speed)
+    public void Initialize(Quaternion rotation, Vector3 pos, float speed, string tagName)
     {
         gameObject.transform.rotation *= rotation;
         gameObject.transform.position = pos;
         this.speed = speed;
-        gameObject.tag = "Laser";
+        gameObject.tag = tagName;
     }
 }
 

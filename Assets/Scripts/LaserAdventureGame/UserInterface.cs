@@ -11,7 +11,7 @@ public class UserIntaface : LaserAdventureGame
 
     void Start()
     {
-        timer.AddPerSecListenner(UpdateTimerText);
+        timer.AddPerSecListenner(DecreaseRemainTime);
         remainSec = GetTimeLimitSec();
         timerText = "";
     }
@@ -25,12 +25,11 @@ public class UserIntaface : LaserAdventureGame
 
     string FormatLivesAndTimerText()
     {
-        return $"{timerText} \nlives:{GetPlayerLives()}\n score:{getScore()}";
+        return $"{timerText} \nあと{GetPlayerLives()}回\n スコア:{GetScore()}";
     }
 
     void Update()
     {
-        // Debug.Log(GetDebugGameState());
         outTxt.text = FormatLivesAndTimerText();
         if (GetGameState() == GameState.GameOver)
         {
@@ -43,10 +42,12 @@ public class UserIntaface : LaserAdventureGame
         }
     }
 
-    void UpdateTimerText()
+    void DecreaseRemainTime()
     {
         remainSec--;
+        SetRemainTime(remainSec);
+
         (int min, int sec) = Sec2Min(remainSec);
-        timerText = $"TIME REMAINS:{min}:{sec.ToString("00")}";
+        timerText = $"タイム:{min}:{sec.ToString("00")}";
     }
 }

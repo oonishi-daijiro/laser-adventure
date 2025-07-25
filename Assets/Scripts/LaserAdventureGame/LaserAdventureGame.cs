@@ -12,11 +12,13 @@ public class LaserAdventureGame : MonoBehaviour
     }
 
     static private Vector3 playerPos;
-    static private int lives = 1500;
-    static private int limitMin = 30;
-    static private int limitSec = 0;
+    static private int lives = 8;
+    private static readonly int limitMin = 2;
+    private static readonly int limitSec = 0;
 
-    static private bool isDebug = true;
+    private static readonly bool isDebug = false;
+    static private int remainTime = limitMin * 60 + limitSec;
+    protected static int approachingPostureLaserRemains = 15;
 
     public enum TreasureScores
     {
@@ -24,7 +26,7 @@ public class LaserAdventureGame : MonoBehaviour
     };
 
     static private int score = 0;
-    static protected int getScore()
+    static protected int GetScore()
     {
         return score;
     }
@@ -51,13 +53,23 @@ public class LaserAdventureGame : MonoBehaviour
 
     static private GameState state = GameState.Playing;
     static private KinectStatus kinectStat = KinectStatus.Waiting;
+
     static protected void SetGameState(GameState state)
     {
-        if (state == GameState.PlayingPostureLaser)
+        if (state == GameState.Completed)
+        {
+            SceneManager.LoadScene("GameClear");
+            return;
+        }
+        if (state == GameState.PlayingPostureLaser || state == GameState.PlayingApproachingPostureLaser)
         {
             if (kinectStat != KinectStatus.Tracking)
             {
-                state = GameState.Unexpected;
+                if (!isDebug)
+                {
+                    LaserAdventureGame.state = GameState.Unexpected;
+                    return;
+                }
             }
         }
         LaserAdventureGame.state = state;
@@ -118,11 +130,14 @@ public class LaserAdventureGame : MonoBehaviour
         {
             SetGameState(GameState.PlayingHMDLaser);
         }
-        else if (MathF.Abs(z) <= 7)
+        else if (MathF.Abs(z) <= 8)
         {
             if (GetKinectStat() == KinectStatus.Tracking || isDebug)
             {
-                SetGameState(GameState.PlayingApproachingPostureLaser);
+                if (approachingPostureLaserRemains > 0)
+                {
+                    SetGameState(GameState.PlayingApproachingPostureLaser);
+                }
             }
         }
     }
@@ -135,5 +150,20 @@ public class LaserAdventureGame : MonoBehaviour
     static protected void AddScore(TreasureScores gainedScore)
     {
         score += (int)gainedScore;
+    }
+
+    static protected void SetRemainTime(int time)
+    {
+        remainTime = time;
+    }
+
+    static protected void DecreaseApproachingPostureLaserRemainCount()
+    {
+        approachingPostureLaserRemains--;
+
+        if (approachingPostureLaserRemains == 0)
+        {
+            SetGameState(GameState.PlayingPostureLaser);
+        }
     }
 }
