@@ -12,8 +12,8 @@ public class LaserAdventureGame : MonoBehaviour
     }
 
     static private Vector3 playerPos;
-    static private int lives = 1500;
-    static protected readonly int limitMin = 30;
+    static private int lives = 5;
+    static protected readonly int limitMin = 5;
     static protected readonly int limitSec = 0;
 
     private static readonly bool isDebug = false;
@@ -62,7 +62,7 @@ public class LaserAdventureGame : MonoBehaviour
             SceneManager.LoadScene("GameClear");
             return;
         }
-        if (state == GameState.PlayingPostureLaser || state == GameState.PlayingApproachingPostureLaser)
+        else if (state == GameState.PlayingPostureLaser || state == GameState.PlayingApproachingPostureLaser)
         {
             if (kinectStat != KinectStatus.Tracking)
             {
@@ -161,6 +161,10 @@ public class LaserAdventureGame : MonoBehaviour
     static protected void SetRemainTime(int time)
     {
         remainTime = time;
+        if (remainTime <= 0)
+        {
+            SetGameState(GameState.GameOver);
+        }
     }
 
     static protected void DecreaseApproachingPostureLaserRemainCount()

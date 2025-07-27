@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using Oculus.Platform;
 using UnityEngine;
 
 public delegate void callback();
@@ -48,25 +46,30 @@ public class Timer : MonoBehaviour
         Debug.Log("construct timer");
         listenners = new List<listenner>();
         timeoutCallbacks = new List<TimeoutCallback>();
+        StartCoroutine(UpdateTime());
     }
 
-    void Update()
+    System.Collections.IEnumerator UpdateTime()
     {
-        currentSec += Time.deltaTime;
-        foreach (var callback in timeoutCallbacks)
+        while (true)
         {
-            callback.UpdateTime(currentSec);
-            if (callback.IsAlreadyCalled())
+            yield return new WaitForFixedUpdate();
+            currentSec += Time.deltaTime;
+            foreach (var callback in timeoutCallbacks)
             {
-                timeoutCallbacks.Remove(callback);
+                callback.UpdateTime(currentSec);
+                if (callback.IsAlreadyCalled())
+                {
+                    timeoutCallbacks.Remove(callback);
+                }
             }
-        }
 
 
-        if (currentSec - previousSec >= 1.0f)
-        {
-            previousSec = currentSec;
-            foreach (var listenner in listenners) listenner();
+            if (currentSec - previousSec >= 1.0f)
+            {
+                previousSec = currentSec;
+                foreach (var listenner in listenners) listenner();
+            }
         }
     }
     public void SetTimeout(callback cb, float timeoutSec)
