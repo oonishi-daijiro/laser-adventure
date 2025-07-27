@@ -16,6 +16,7 @@ public class UserIntaface : LaserAdventureGame
         timerText = "";
     }
 
+
     (int, int) Sec2Min(int seconds)
     {
         int min = (seconds - (seconds % 60)) / 60;

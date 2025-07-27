@@ -50,6 +50,7 @@ public class TextKey : LaserAdventureGame
     System.Collections.IEnumerator DelayAndLoadScene()
     {
         yield return new WaitForSeconds(2f);
+        ResetEverything();
         SceneManager.LoadScene("LaserRoom");
     }
 }

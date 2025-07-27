@@ -12,13 +12,16 @@ public class LaserAdventureGame : MonoBehaviour
     }
 
     static private Vector3 playerPos;
-    static private int lives = 5;
+    static private readonly int defaultLives = 5;
+    static private readonly int approachingPostureLaserCount = 15;
+
+    static private int lives = defaultLives;
     static protected readonly int limitMin = 5;
     static protected readonly int limitSec = 0;
 
     private static readonly bool isDebug = false;
     static private int remainTime = limitMin * 60 + limitSec;
-    protected static int approachingPostureLaserRemains = 15;
+    protected static int approachingPostureLaserRemains = approachingPostureLaserCount;
     static protected Vector3 initialHMDPosition = new(0, 0, -9.5f);
 
     public enum TreasureScores
@@ -30,6 +33,15 @@ public class LaserAdventureGame : MonoBehaviour
     static protected int GetScore()
     {
         return score;
+    }
+
+    static public void ResetEverything()
+    {
+        lives = defaultLives;
+        approachingPostureLaserRemains = approachingPostureLaserCount;
+        score = 0;
+        SetGameState(GameState.Yet);
+        SetKinectStat(KinectStatus.OutOfRange);
     }
 
     protected enum GameState
@@ -176,4 +188,5 @@ public class LaserAdventureGame : MonoBehaviour
             SetGameState(GameState.PlayingPostureLaser);
         }
     }
+
 }

@@ -7,6 +7,7 @@ public class StartButton : MonoBehaviour
     [SerializeField] string sceneName;
     public void OnClickButton()
     {
+        LaserAdventureGame.ResetEverything();
         SceneManager.LoadScene(sceneName);
     }
 
