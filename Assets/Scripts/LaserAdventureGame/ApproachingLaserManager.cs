@@ -10,7 +10,7 @@ public class ApproachingLaserManager : InvokePeriodically
     private ApproachingFromFront origianlLaser;
     List<Tuple<Vector3, Quaternion>> randomLaserOps;
     readonly System.Random rand = new();
-
+    bool isAlreadyInvokedSetStateFunc = false;
 
     new void Start()
     {
@@ -32,6 +32,7 @@ public class ApproachingLaserManager : InvokePeriodically
 
     void InstantiateNewRandomLaser()
     {
+        Debug.Log("instantiate");
         var obj = Instantiate(origianlLaser);
         var randomIndex = rand.Next(0, randomLaserOps.Count);
         (Vector3 pos, Quaternion rot) = randomLaserOps[randomIndex];
@@ -48,8 +49,9 @@ public class ApproachingLaserManager : InvokePeriodically
             }
             InstantiateNewRandomLaser();
             DecreaseApproachingPostureLaserRemainCount();
-            if (approachingPostureLaserRemains == 0)
+            if (approachingPostureLaserRemains == 0 && GetGameState() == GameState.PlayingApproachingPostureLaser && !isAlreadyInvokedSetStateFunc)
             {
+                isAlreadyInvokedSetStateFunc = true;
                 Invoke(nameof(SetGameState2PostureLaser), 5);
             }
         }
@@ -58,6 +60,7 @@ public class ApproachingLaserManager : InvokePeriodically
     void SetGameState2PostureLaser()
     {
         SetGameState(GameState.PlayingPostureLaser);
+        SoundEffectManager.PlaySoundEffect(SoundEffectManager.SoundEffectKind.Ignition);
     }
 
 }

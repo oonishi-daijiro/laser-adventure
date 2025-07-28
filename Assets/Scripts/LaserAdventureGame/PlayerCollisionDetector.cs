@@ -12,7 +12,7 @@ public class PlayerCollisionDetector : LaserAdventureGame
         {
             obj.OnCollideToPlayer();
             isAlreadyTriggered = true;
-            Invoke("ResetIsTriggered", 5);
+            Invoke(nameof(ResetIsTriggered), 5);
         }
     }
     void ResetIsTriggered()

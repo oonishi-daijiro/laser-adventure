@@ -15,7 +15,8 @@ public class ApproachingTreasureManager : InvokePeriodically
             if (obj.TryGetComponent<ApproachingFromFront>(out var comp))
             {
                 var randomX = Random.Range(-1.0f, 1.0f);
-                comp.Initialize(Quaternion.identity, new Vector3(randomX, obj.transform.position.y, 0), 0.01f, "Treasure");
+                var randomY = Random.Range(0, 1f);
+                comp.Initialize(Quaternion.identity, new Vector3(randomX, obj.transform.position.y + randomY, 0), 0.01f, "Treasure");
             }
         }
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Laser : LaserAdventureGame, IPlayerCollideAble
+public class Menace : LaserAdventureGame, IPlayerCollideAble
 {
     [SerializeField] Image DamageImg;
 
