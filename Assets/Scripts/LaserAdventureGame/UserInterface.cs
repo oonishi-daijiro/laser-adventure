@@ -32,15 +32,6 @@ public class UserIntaface : LaserAdventureGame
     void Update()
     {
         outTxt.text = FormatLivesAndTimerText();
-        if (GetGameState() == GameState.GameOver)
-        {
-            timer.SetTimeout(() =>
-                        {
-                            Debug.Log("ゲームオーバー");
-                            SceneManager.LoadScene("GameOver");
-                        }, 3);
-            SetGameState(GameState.Yet);
-        }
     }
 
     void DecreaseRemainTime()

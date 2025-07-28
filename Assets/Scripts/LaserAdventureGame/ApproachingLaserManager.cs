@@ -32,7 +32,6 @@ public class ApproachingLaserManager : InvokePeriodically
 
     void InstantiateNewRandomLaser()
     {
-        Debug.Log("instantiate");
         var obj = Instantiate(origianlLaser);
         var randomIndex = rand.Next(0, randomLaserOps.Count);
         (Vector3 pos, Quaternion rot) = randomLaserOps[randomIndex];

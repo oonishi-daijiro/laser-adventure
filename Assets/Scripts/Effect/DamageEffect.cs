@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class Damage : MonoBehaviour
+public class Damage : LaserAdventureGame
 {
     [SerializeField] private Image DamageImg;
     [SerializeField] private AudioClip seClip;
@@ -39,7 +39,7 @@ public class Damage : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return) && !isGameOverEffectPlaying)
+        if (GetGameState() == GameState.GameOver)
         {
             StartCoroutine(GameOverEffect());
         }
