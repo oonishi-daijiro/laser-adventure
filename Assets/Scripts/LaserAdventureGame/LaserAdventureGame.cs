@@ -12,14 +12,14 @@ public class LaserAdventureGame : MonoBehaviour
     }
 
     static private Vector3 playerPos;
-    static private readonly int defaultLives = 5;
+    static private readonly int defaultLives = 5000;
     static private readonly int approachingPostureLaserCount = 15;
 
     static private int lives = defaultLives;
-    static protected readonly int limitMin = 5;
+    static protected readonly int limitMin = 3000;
     static protected readonly int limitSec = 0;
 
-    private static readonly bool isDebug = false;
+    private static bool isDebug = false;
     static private int remainTime = limitMin * 60 + limitSec;
     protected static int approachingPostureLaserRemains = approachingPostureLaserCount;
     static protected Vector3 initialHMDPosition = new(0, 0, -9.5f);
@@ -182,11 +182,15 @@ public class LaserAdventureGame : MonoBehaviour
     static protected void DecreaseApproachingPostureLaserRemainCount()
     {
         approachingPostureLaserRemains--;
-
-        if (approachingPostureLaserRemains == 0)
+        if (approachingPostureLaserRemains <= 0)
         {
-            SetGameState(GameState.PlayingPostureLaser);
+            approachingPostureLaserRemains = 0;
         }
+    }
+
+    static protected void Set2DebugMode()
+    {
+        isDebug = true;
     }
 
 }

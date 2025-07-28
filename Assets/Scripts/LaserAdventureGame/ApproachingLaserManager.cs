@@ -17,23 +17,47 @@ public class ApproachingLaserManager : InvokePeriodically
         base.Start();
         randomLaserOps = new();
         origianlLaser = origin.GetComponent<ApproachingFromFront>();
-        randomLaserOps.Add(new(new Vector3(0, 0.9f, 0), Quaternion.Euler(0, 0, -100)));
-        randomLaserOps.Add(new(new Vector3(0, 0.9f, 0), Quaternion.Euler(0, 0, -86)));
-        randomLaserOps.Add(new(new Vector3(0.5f, 2.0f, 0), Quaternion.Euler(0, 0, 150)));
-        randomLaserOps.Add(new(new Vector3(0, 4.0f, 0), Quaternion.Euler(0, 0, -150)));
-        randomLaserOps.Add(new(new Vector3(0, 0.9f, 0), Quaternion.Euler(0, 0, -70)));
+        var instantiateZpos = -1;
+        randomLaserOps.Add(new(new Vector3(0, 0.9f, instantiateZpos), Quaternion.Euler(0, 0, -100)));
+        randomLaserOps.Add(new(new Vector3(0, 0.9f, instantiateZpos), Quaternion.Euler(0, 0, -86)));
+        randomLaserOps.Add(new(new Vector3(0.5f, 2.0f, instantiateZpos), Quaternion.Euler(0, 0, 150)));
+        randomLaserOps.Add(new(new Vector3(0, 4.0f, instantiateZpos), Quaternion.Euler(0, 0, -150)));
+        randomLaserOps.Add(new(new Vector3(0, 0.9f, instantiateZpos), Quaternion.Euler(0, 0, -70)));
+        randomLaserOps.Add(new(new Vector3(0, 0.9f, instantiateZpos), Quaternion.Euler(0, 0, 70)));
+        randomLaserOps.Add(new(new Vector3(0, 0.9f, instantiateZpos), Quaternion.Euler(30, 0, 70)));
+        randomLaserOps.Add(new(new Vector3(0, 1.2f, instantiateZpos), Quaternion.Euler(0, 30, -70)));
+        randomLaserOps.Add(new(new Vector3(0, 1.2f, instantiateZpos), Quaternion.Euler(0, -30, -70)));
+        randomLaserOps.Add(new(new Vector3(0, 0, instantiateZpos), Quaternion.Euler(0, 0, 90)));
+    }
+
+    void InstantiateNewRandomLaser()
+    {
+        var obj = Instantiate(origianlLaser);
+        var randomIndex = rand.Next(0, randomLaserOps.Count);
+        (Vector3 pos, Quaternion rot) = randomLaserOps[randomIndex];
+        obj.GetComponent<ApproachingFromFront>().Initialize(rot, pos, 0.025f, "Laser");
     }
 
     protected override void Invoke()
     {
         if (GetGameState() == GameState.PlayingApproachingPostureLaser)
         {
-            var obj = Instantiate(origianlLaser);
-            var randomIndex = rand.Next(0, randomLaserOps.Count);
-            Debug.Log(randomIndex);
-            (Vector3 pos, Quaternion rot) = randomLaserOps[randomIndex];
-            obj.GetComponent<ApproachingFromFront>().Initialize(rot, pos, 0.05f, "Laser");
+            if (approachingPostureLaserRemains <= 5)
+            {
+                InstantiateNewRandomLaser();
+            }
+            InstantiateNewRandomLaser();
             DecreaseApproachingPostureLaserRemainCount();
+            if (approachingPostureLaserRemains == 0)
+            {
+                Invoke(nameof(SetGameState2PostureLaser), 5);
+            }
         }
     }
+
+    void SetGameState2PostureLaser()
+    {
+        SetGameState(GameState.PlayingPostureLaser);
+    }
+
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 public class ApproachingTreasureManager : InvokePeriodically
 {
     [SerializeField] List<GameObject> treasures = new();
-    System.Random rand = new();
+    readonly System.Random rand = new();
 
     protected override void Invoke()
     {
@@ -14,7 +14,7 @@ public class ApproachingTreasureManager : InvokePeriodically
 
             if (obj.TryGetComponent<ApproachingFromFront>(out var comp))
             {
-                var randomX = rand.Next(-1, 1);
+                var randomX = Random.Range(-1.0f, 1.0f);
                 comp.Initialize(Quaternion.identity, new Vector3(randomX, obj.transform.position.y, 0), 0.01f, "Treasure");
             }
         }

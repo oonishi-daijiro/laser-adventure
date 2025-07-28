@@ -28,6 +28,8 @@ public sealed class Player : LaserAdventureGame
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         rigidBdy = gameObject.GetComponent<Rigidbody>();
+        Set2DebugMode();
+        SetGameState(GameState.PlayingHMDLaser);
     }
 
     public void OnMove(InputAction.CallbackContext context)
