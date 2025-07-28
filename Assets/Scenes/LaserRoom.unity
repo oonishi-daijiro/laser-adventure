@@ -4246,6 +4246,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DamageImg: {fileID: 1400453512}
+  seClip: {fileID: 0}
+  flashCount: 3
+  fadeDuration: 0.5
+  stayDuration: 1
+  delayBetweenFlashes: 0.1
+  sceneDelayAfterEffect: 1
+  nextSceneName: NextScene
 --- !u!4 &242155521 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2018603873683457656, guid: 623bb50d8d0b3d54aa4a8f6566798d70, type: 3}
