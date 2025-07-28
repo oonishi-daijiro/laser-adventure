@@ -39,6 +39,10 @@ public class TextKey : LaserAdventureGame
             isMoving = true;
             StartCoroutine(DelayAndLoadScene());
         }
+        else if (keyboard.digit6Key.isPressed)
+        {
+            KeyText.text = "元の位置に戻ってね！";
+        }
 
         // Z軸に動かす処理
         if (isMoving && targetObject != null)
