@@ -12,11 +12,11 @@ public class LaserAdventureGame : MonoBehaviour
     }
 
     static private Vector3 playerPos;
-    static private readonly int defaultLives = 8;
+    static protected readonly int defaultLives = 8;
     static private readonly int approachingPostureLaserCount = 15;
 
     static private int lives = defaultLives;
-    static protected readonly int limitMin = 3;
+    static protected readonly int limitMin = 3000;
     static protected readonly int limitSec = 0;
 
     private static bool isDebug = false;
@@ -90,15 +90,11 @@ public class LaserAdventureGame : MonoBehaviour
 
     static protected void DecreasePlayerLives()
     {
-        if (lives - 1 == 0)
+        lives--;
+        if (lives == 0)
         {
             SetGameState(GameState.GameOver);
         }
-        else
-        {
-            lives--;
-        }
-
     }
 
     static protected GameState GetGameState()
@@ -153,11 +149,13 @@ public class LaserAdventureGame : MonoBehaviour
                     {
                         SetGameState(GameState.PlayingApproachingPostureLaser);
                     }
+                    else
+                    {
+                        SetGameState(GameState.PlayingPostureLaser);
+                    }
                 }
             }
         }
-
-
     }
 
     static protected Vector3 GetPlayerPos()
