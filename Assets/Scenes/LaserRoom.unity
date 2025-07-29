@@ -4200,7 +4200,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 806440317}
+  m_Camera: {fileID: 1905038053}
   m_PlaneDistance: 0.4
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -4240,19 +4240,19 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 235604384}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb8dd4ff56805f7478fe088054efb356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   DamageImg: {fileID: 1400453512}
-  seClip: {fileID: 0}
+  seClip: {fileID: 8300000, guid: 2e703679c7de6894991798968600173f, type: 3}
   flashCount: 3
   fadeDuration: 0.5
-  stayDuration: 1
-  delayBetweenFlashes: 0.1
-  sceneDelayAfterEffect: 1
-  nextSceneName: NextScene
+  stayDuration: 0.3
+  delayBetweenFlashes: 0.8
+  sceneDelayAfterEffect: 0
+  nextSceneName: GameOver
 --- !u!4 &242155521 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2018603873683457656, guid: 623bb50d8d0b3d54aa4a8f6566798d70, type: 3}
@@ -10480,6 +10480,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2018603873683457656, guid: 623bb50d8d0b3d54aa4a8f6566798d70, type: 3}
   m_PrefabInstance: {fileID: 946162}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &534806685
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 534806686}
+  m_Layer: 0
+  m_Name: Effect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &534806686
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534806685}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.84426, y: 1.00231, z: -0.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &541152249
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25627,6 +25658,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1435050430}
   - component: {fileID: 1435050431}
+  - component: {fileID: 1435050432}
   m_Layer: 0
   m_Name: UserInterface
   m_TagString: Untagged
@@ -25665,6 +25697,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dd0a78da6ee21343a221e89663368b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1435050432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1435050429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb8dd4ff56805f7478fe088054efb356, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DamageImg: {fileID: 1400453512}
+  seClip: {fileID: 8300000, guid: 2e703679c7de6894991798968600173f, type: 3}
+  flashCount: 3
+  fadeDuration: 0.6
+  stayDuration: 0.3
+  delayBetweenFlashes: 0.8
+  sceneDelayAfterEffect: 1
+  nextSceneName: GameOver
 --- !u!1 &1443935202 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1133879610561952144, guid: e882db09139dfa24c918864ff5aa320a, type: 3}
@@ -40444,3 +40496,4 @@ SceneRoots:
   - {fileID: 514990152}
   - {fileID: 4914610663921734408}
   - {fileID: 572498345}
+  - {fileID: 534806686}
