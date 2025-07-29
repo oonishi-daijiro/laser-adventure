@@ -27,6 +27,7 @@ public class ApproachingFromFront : MonoBehaviour
 public abstract class InvokePeriodically : LaserAdventureGame
 {
     [SerializeField] private float freq;
+    [SerializeField] private int delay;
     [SerializeField] private Timer timer;
 
     private int currentTime = 0;
@@ -34,6 +35,7 @@ public abstract class InvokePeriodically : LaserAdventureGame
 
     public void Start()
     {
+        currentTime = -delay;
         timer.AddPerSecListenner(PerSecListenner);
     }
 

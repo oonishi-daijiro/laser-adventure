@@ -48,7 +48,8 @@ public class UserIntaface : LaserAdventureGame
     {
         for (int i = 0; i < defaultLives - GetPlayerLives(); i++)
         {
-            if (defaultLives - 1 - i >= 0)
+            var index = defaultLives - 1 - i;
+            if (index >= 0 && hearts.Count > index)
             {
                 Destroy(hearts[defaultLives - 1 - i]);
             }
