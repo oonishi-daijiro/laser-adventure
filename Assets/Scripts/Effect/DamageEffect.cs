@@ -39,7 +39,8 @@ public class Damage : LaserAdventureGame
 
     void Update()
     {
-        if (GetGameState() == GameState.GameOver)
+        // ゲームオーバーかつエフェクト未再生なら開始
+        if (GetGameState() == GameState.GameOver && !isGameOverEffectPlaying)
         {
             StartCoroutine(GameOverEffect());
         }
@@ -54,7 +55,8 @@ public class Damage : LaserAdventureGame
             // 効果音再生（フェードイン開始直前）
             if (seClip != null)
             {
-                AudioSource.PlayClipAtPoint(seClip, Vector3.zero, 1f);
+                // カメラ位置で再生することで2Dでも安定
+                AudioSource.PlayClipAtPoint(seClip, Camera.main.transform.position, 1f);
             }
 
             // フェードイン
@@ -80,18 +82,21 @@ public class Damage : LaserAdventureGame
             }
             DamageImg.color = clearColor;
 
+            // フラッシュ間の遅延
             yield return new WaitForSeconds(delayBetweenFlashes);
         }
 
-        // フラッシュ後、少し遅れてシーン遷移
+        // 最後のフラッシュ後に少し待ってシーン遷移
         yield return new WaitForSeconds(sceneDelayAfterEffect);
 
-        // シーン遷移（名前が空でなければ）
+        // シーン遷移（名前が設定されていれば）
         if (!string.IsNullOrEmpty(nextSceneName))
         {
             SceneManager.LoadScene(nextSceneName);
         }
 
-        isGameOverEffectPlaying = false;
+        // ※この行はシーン遷移後に意味がない可能性があるため、
+        //    残しておくなら用途を明確にする（リトライ機能など）。
+        // isGameOverEffectPlaying = false;
     }
 }

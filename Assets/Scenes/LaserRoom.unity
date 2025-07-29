@@ -4240,7 +4240,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 235604384}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb8dd4ff56805f7478fe088054efb356, type: 3}
   m_Name: 
@@ -4248,7 +4248,7 @@ MonoBehaviour:
   DamageImg: {fileID: 1400453512}
   seClip: {fileID: 8300000, guid: 2e703679c7de6894991798968600173f, type: 3}
   flashCount: 3
-  fadeDuration: 0.6
+  fadeDuration: 0.5
   stayDuration: 0.3
   delayBetweenFlashes: 0.8
   sceneDelayAfterEffect: 0
