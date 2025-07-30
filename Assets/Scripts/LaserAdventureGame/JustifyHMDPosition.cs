@@ -9,26 +9,28 @@ public class JustifyHMDPosition : LaserAdventureGame
     private Vector3 leftRightDelta = new(0.1f, 0, 0);
     private Vector3 upDownDelta = new(0, 0.1f, 0);
     private bool isJustifiedOnce = false;
+    void Start()
+    {
+        StartCoroutine(Justify());
+    }
 
     void Update()
     {
         JustifyPlaceByKeydown();
-        StartCoroutine(Justify());
     }
 
     IEnumerator Justify()
     {
-        yield return new WaitForEndOfFrame();
+        OVRTracker tracker = new();
+        yield return tracker;
+        Debug.Log("tracked");
+
         if (!isJustifiedOnce)
         {
             var camYangleRotation = HMDCam.transform.localEulerAngles.y;
-            var localCamPos = HMDCam.transform.localPosition;
-            Debug.Log($"{localCamPos}");
-            var newX = gameObject.transform.position.x - localCamPos.x;
-            var newY = gameObject.transform.position.y - (localCamPos.y - 1.3f);
-            var newZ = gameObject.transform.position.z - localCamPos.z;
-
-            gameObject.transform.position = new Vector3(newX, newY, newZ);
+            var camPos = HMDCam.transform.position;
+            Debug.Log(camPos);
+            gameObject.transform.position += new Vector3(gameObject.transform.position.x - camPos.x, gameObject.transform.position.y - camPos.y, gameObject.transform.position.z - camPos.z);
             gameObject.transform.rotation = Quaternion.AngleAxis(-camYangleRotation, Vector3.up);
             isJustifiedOnce = true;
             SetGameState(GameState.Playing);
@@ -61,6 +63,13 @@ public class JustifyHMDPosition : LaserAdventureGame
         else if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             gameObject.transform.position -= upDownDelta;
+        }
+        else if (Input.GetKeyDown(KeyCode.Return))
+        {
+            var camYangleRotation = HMDCam.transform.localEulerAngles.y;
+            var camPos = HMDCam.transform.position;
+            gameObject.transform.position += new Vector3(0 - camPos.x, 1.2f - camPos.y, -8 - camPos.z);
+            gameObject.transform.rotation = Quaternion.AngleAxis(-camYangleRotation, Vector3.up);
         }
     }
 }
