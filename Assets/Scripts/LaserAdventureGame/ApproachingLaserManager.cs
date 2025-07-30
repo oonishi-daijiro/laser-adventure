@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Meta.XR.MultiplayerBlocks.Fusion.Editor;
 using UnityEngine;
 
 public class ApproachingLaserManager : InvokePeriodically
@@ -11,6 +12,7 @@ public class ApproachingLaserManager : InvokePeriodically
     List<Tuple<Vector3, Quaternion>> randomLaserOps;
     readonly System.Random rand = new();
     bool isAlreadyInvokedSetStateFunc = false;
+    bool isAlreadyPlayedSoundEffect = false;
 
     new void Start()
     {
@@ -53,6 +55,14 @@ public class ApproachingLaserManager : InvokePeriodically
                 isAlreadyInvokedSetStateFunc = true;
                 Invoke(nameof(SetGameState2PostureLaser), 5);
             }
+        }
+    }
+    void Update()
+    {
+        if (!isAlreadyPlayedSoundEffect && GetGameState() == GameState.PlayingApproachingPostureLaser)
+        {
+            SoundEffectManager.PlaySoundEffect(SoundEffectManager.SoundEffectKind.ApproachingLaserIgnition);
+            isAlreadyPlayedSoundEffect = true;
         }
     }
 

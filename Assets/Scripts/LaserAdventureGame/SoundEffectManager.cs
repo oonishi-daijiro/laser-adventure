@@ -8,6 +8,7 @@ public class SoundEffectManager : MonoBehaviour
     {
         LaserCollision,
         Cash,
+        ApproachingLaserIgnition,
         Ignition
     };
 
@@ -16,6 +17,7 @@ public class SoundEffectManager : MonoBehaviour
     [SerializeField] private AudioClip cashSE;
     [SerializeField] private AudioClip laserCollisionSe;
     [SerializeField] private AudioClip laserIgnition;
+    [SerializeField] private AudioClip approachingLaserIgnitionBuzzer;
 
     static private AudioSource audioSrc;
 
@@ -30,6 +32,7 @@ public class SoundEffectManager : MonoBehaviour
         soundEffects[SoundEffectKind.Cash] = cashSE;
         soundEffects[SoundEffectKind.LaserCollision] = laserCollisionSe;
         soundEffects[SoundEffectKind.Ignition] = laserIgnition;
+        soundEffects[SoundEffectKind.ApproachingLaserIgnition] = approachingLaserIgnitionBuzzer;
     }
 
     static public void PlaySoundEffect(SoundEffectKind kind)

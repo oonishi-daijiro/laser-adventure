@@ -287,7 +287,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &6100473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10069,7 +10069,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &514990150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12945,8 +12945,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab93dda9c546614419bfa33306f600b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  freq: 2
-  delay: 0
+  freq: 3
+  delay: 7
   timer: {fileID: 1208482669}
   origin: {fileID: 1563208408}
 --- !u!114 &667820231
@@ -21045,6 +21045,7 @@ MonoBehaviour:
   cashSE: {fileID: 8300000, guid: 48c61e31590418549bbd08e43e6f7342, type: 3}
   laserCollisionSe: {fileID: 8300000, guid: 0cdd1fa80faf8734faae4911b6e472ff, type: 3}
   laserIgnition: {fileID: 8300000, guid: e696007417366244d920542eabc12cf4, type: 3}
+  approachingLaserIgnitionBuzzer: {fileID: 8300000, guid: dae3f3f05dbe8df4e8103df61ee09f01, type: 3}
 --- !u!4 &1206789075
 Transform:
   m_ObjectHideFlags: 0
@@ -21472,7 +21473,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 36078ab0369161e49a29d349ae3e0739, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 36078ab0369161e49a29d349ae3e0739, type: 3}
       propertyPath: m_TagString
