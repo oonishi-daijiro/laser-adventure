@@ -14,7 +14,7 @@ public class LaserAdventureGame : MonoBehaviour
 
     static protected readonly int defaultLives = 8;
     static protected readonly Vector3 initialHMDPosition = new(0, 0, -9.5f);
-    static protected readonly int limitMin = 3000;
+    static protected readonly int limitMin = 3;
     static protected readonly int limitSec = 0;
     static private readonly int approachingPostureLaserCount = 15;
 
@@ -75,7 +75,7 @@ public class LaserAdventureGame : MonoBehaviour
         lives = defaultLives;
         approachingPostureLaserRemains = approachingPostureLaserCount;
         score = 0;
-        SetGameState(GameState.Yet);
+        SetGameState(GameState.Playing);
         SetKinectStat(KinectStatus.OutOfRange);
     }
 
@@ -99,7 +99,7 @@ public class LaserAdventureGame : MonoBehaviour
         Error
     };
 
-    static private GameState state = GameState.Yet;
+    static private GameState state = GameState.Playing;
     static private KinectStatus kinectStat = KinectStatus.Waiting;
 
     static protected void SetGameState(GameState state)

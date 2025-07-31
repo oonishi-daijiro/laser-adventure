@@ -1,13 +1,23 @@
 using UnityEngine;
 
-public class Treasure : LaserAdventureGame, IPlayerCollideAble
+public class Treasure : LaserAdventureGame, IPlayerCollideAble, ISoccerBallColideAble
 {
     [SerializeField] LaserAdventureGame.TreasureScores score;
-
-    public void OnCollideToPlayer()
+    void onCollide()
     {
         SoundEffectManager.PlaySoundEffect(SoundEffectManager.SoundEffectKind.Cash);
         AddScore(score);
         Destroy(gameObject);
     }
+
+    public void OnCollideToPlayer()
+    {
+        onCollide();
+    }
+
+    public void OnCollideToBall()
+    {
+        onCollide();
+    }
+
 }

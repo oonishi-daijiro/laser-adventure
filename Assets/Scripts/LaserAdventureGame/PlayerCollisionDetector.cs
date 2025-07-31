@@ -6,14 +6,15 @@ public class PlayerCollisionDetector : LaserAdventureGame
 
     void OnTriggerEnter(Collider other)
     {
-        var obj = gameObject.GetComponent<IPlayerCollideAble>();
+        var plObj = gameObject.GetComponent<IPlayerCollideAble>();
 
-        if (obj != null && !isAlreadyTriggered && other.gameObject.CompareTag("Player") && GetGameState() != GameState.Yet)
+        if (plObj != null && !isAlreadyTriggered && other.gameObject.CompareTag("Player") && GetGameState() != GameState.Yet)
         {
-            obj.OnCollideToPlayer();
+            plObj.OnCollideToPlayer();
             isAlreadyTriggered = true;
             Invoke(nameof(ResetIsTriggered), 5);
         }
+        
     }
     void ResetIsTriggered()
     {
