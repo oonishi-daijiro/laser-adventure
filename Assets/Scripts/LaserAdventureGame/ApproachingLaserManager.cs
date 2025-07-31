@@ -1,54 +1,75 @@
 using System;
 using System.Collections.Generic;
+using Meta.XR.MultiplayerBlocks.Fusion.Editor;
 using UnityEngine;
 
-public class ApproachingLaserManager : LaserAdventureGame
+public class ApproachingLaserManager : InvokePeriodically
 {
+
     [SerializeField]
     public GameObject origin;
-    private ApproachingLaser origianlLaser;
-
-    [SerializeField] public float freq_s;
-    [SerializeField] public float speed;
-    private float nextInstantiateTime = 0;
-    private float currentTime = 0;
+    private ApproachingFromFront origianlLaser;
     List<Tuple<Vector3, Quaternion>> randomLaserOps;
-    System.Random rand = new();
+    readonly System.Random rand = new();
+    bool isAlreadyInvokedSetStateFunc = false;
+    bool isAlreadyPlayedSoundEffect = false;
 
-    void Start()
+    new void Start()
     {
+        base.Start();
         randomLaserOps = new();
-        origianlLaser = origin.GetComponent<ApproachingLaser>();
-        randomLaserOps.Add(new(new Vector3(0, 0.9f, 0), Quaternion.Euler(0, 0, -100)));
-        randomLaserOps.Add(new(new Vector3(0, 0.9f, 0), Quaternion.Euler(0, 0, -86)));
-        randomLaserOps.Add(new(new Vector3(2.0f, 4.0f, 0), Quaternion.Euler(0, 0, 150)));
-        randomLaserOps.Add(new(new Vector3(2.0f, 4.0f, 0), Quaternion.Euler(0, 0, -150)));
-        randomLaserOps.Add(new(new Vector3(0, 0.9f, 0), Quaternion.Euler(0, 0, -70)));
+        origianlLaser = origin.GetComponent<ApproachingFromFront>();
+        var instantiateZpos = -1;
+        randomLaserOps.Add(new(new Vector3(0, 0.9f, instantiateZpos), Quaternion.Euler(0, 0, -100)));
+        randomLaserOps.Add(new(new Vector3(0, 0.9f, instantiateZpos), Quaternion.Euler(0, 0, -86)));
+        randomLaserOps.Add(new(new Vector3(0.5f, 2.0f, instantiateZpos), Quaternion.Euler(0, 0, 150)));
+        randomLaserOps.Add(new(new Vector3(0, 4.0f, instantiateZpos), Quaternion.Euler(0, 0, -150)));
+        randomLaserOps.Add(new(new Vector3(0, 0.9f, instantiateZpos), Quaternion.Euler(0, 0, -70)));
+        randomLaserOps.Add(new(new Vector3(0, 0.9f, instantiateZpos), Quaternion.Euler(0, 0, 70)));
+        randomLaserOps.Add(new(new Vector3(0, 0.9f, instantiateZpos), Quaternion.Euler(30, 0, 70)));
+        randomLaserOps.Add(new(new Vector3(0, 1.2f, instantiateZpos), Quaternion.Euler(0, 30, -70)));
+        randomLaserOps.Add(new(new Vector3(0, 1.2f, instantiateZpos), Quaternion.Euler(0, -30, -70)));
+        randomLaserOps.Add(new(new Vector3(0, 0, instantiateZpos), Quaternion.Euler(0, 0, 90)));
     }
 
-    bool ShouldInstantieateNewLaser()
+    void InstantiateNewRandomLaser()
     {
-        currentTime += Time.deltaTime;
-        if (currentTime > nextInstantiateTime)
-        {
-            nextInstantiateTime = currentTime + freq_s;
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        var obj = Instantiate(origianlLaser);
+        var randomIndex = rand.Next(0, randomLaserOps.Count);
+        (Vector3 pos, Quaternion rot) = randomLaserOps[randomIndex];
+        obj.GetComponent<ApproachingFromFront>().Initialize(rot, pos, 0.025f, "Laser");
     }
 
+    protected override void Invoke()
+    {
+        if (GetGameState() == GameState.PlayingApproachingPostureLaser)
+        {
+            if (approachingPostureLaserRemains <= 5)
+            {
+                InstantiateNewRandomLaser();
+            }
+            InstantiateNewRandomLaser();
+            DecreaseApproachingPostureLaserRemainCount();
+            if (approachingPostureLaserRemains == 0 && GetGameState() == GameState.PlayingApproachingPostureLaser && !isAlreadyInvokedSetStateFunc)
+            {
+                isAlreadyInvokedSetStateFunc = true;
+                Invoke(nameof(SetGameState2PostureLaser), 5);
+            }
+        }
+    }
     void Update()
     {
-        if (GetGameState() == GameState.PlayingApproachingPostureLaser && ShouldInstantieateNewLaser())
+        if (!isAlreadyPlayedSoundEffect && GetGameState() == GameState.PlayingApproachingPostureLaser)
         {
-            var obj = Instantiate(origianlLaser);
-            var randomIndex = rand.Next(0, randomLaserOps.Count);
-            Debug.Log(randomIndex);
-            (Vector3 pos, Quaternion rot) = randomLaserOps[randomIndex];
-            obj.GetComponent<ApproachingLaser>().Initialize(rot, pos, 0.05f);
+            SoundEffectManager.PlaySoundEffect(SoundEffectManager.SoundEffectKind.ApproachingLaserIgnition);
+            isAlreadyPlayedSoundEffect = true;
         }
     }
+
+    void SetGameState2PostureLaser()
+    {
+        SetGameState(GameState.PlayingPostureLaser);
+        SoundEffectManager.PlaySoundEffect(SoundEffectManager.SoundEffectKind.Ignition);
+    }
+
 }

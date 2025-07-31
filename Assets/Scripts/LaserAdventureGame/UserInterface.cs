@@ -1,19 +1,36 @@
+using System.Collections.Generic;
+using Meta.WitAi;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UserIntaface : LaserAdventureGame
 {
     [SerializeField] Timer timer;
     [SerializeField] TextMeshProUGUI outTxt;
+    [SerializeField] GameObject heart;
     private string timerText;
     int remainSec;
+    List<GameObject> hearts;
 
     void Start()
     {
-        timer.AddPerSecListenner(UpdateTimerText);
+        timer.AddPerSecListenner(DecreaseRemainTime);
         remainSec = GetTimeLimitSec();
         timerText = "";
+        hearts = new();
+        var heartSize = heart.GetComponent<Renderer>().bounds.size;
+        var newPosX = heart.transform.position.x;
+
+        for (int i = 0; i < GetPlayerLives(); i++)
+        {
+            var h = Instantiate(heart, new Vector3(newPosX, heart.transform.position.y, 3), Quaternion.identity, gameObject.transform);
+            newPosX += heartSize.x;
+            hearts.Add(h);
+        }
     }
+
 
     (int, int) Sec2Min(int seconds)
     {
@@ -24,19 +41,28 @@ public class UserIntaface : LaserAdventureGame
 
     string FormatLivesAndTimerText()
     {
-        return $"{timerText} \nlives:{GetPlayerLives()}";
+        return $"{timerText} \n\n スコア:{GetScore()}";
     }
 
     void Update()
     {
-        // Debug.Log(GetDebugGameState());
+        for (int i = 0; i < defaultLives - GetPlayerLives(); i++)
+        {
+            var index = defaultLives - 1 - i;
+            if (index >= 0 && hearts.Count > index)
+            {
+                Destroy(hearts[defaultLives - 1 - i]);
+            }
+        }
         outTxt.text = FormatLivesAndTimerText();
     }
 
-    void UpdateTimerText()
+    void DecreaseRemainTime()
     {
         remainSec--;
+        SetRemainTime(remainSec);
+
         (int min, int sec) = Sec2Min(remainSec);
-        timerText = $"TIME REMAINS:{min}:{sec.ToString("00")}";
+        timerText = $"タイム:{min}:{sec.ToString("00")}";
     }
 }

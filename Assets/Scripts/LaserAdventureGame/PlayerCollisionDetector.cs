@@ -6,15 +6,17 @@ public class PlayerCollisionDetector : LaserAdventureGame
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && gameObject.CompareTag("Laser") && !isAlreadyTriggered)
+        var obj = gameObject.GetComponent<IPlayerCollideAble>();
+
+        if (obj != null && !isAlreadyTriggered && other.gameObject.CompareTag("Player") && GetGameState() != GameState.Yet)
         {
-            DecreasePlayerLives();
+            obj.OnCollideToPlayer();
             isAlreadyTriggered = true;
-            SoundEffectManager.PlaySoundEffect(SoundEffectManager.SoundEffectKind.LaserCollision);
+            Invoke(nameof(ResetIsTriggered), 5);
         }
-        else if (other.CompareTag("Player") && gameObject.CompareTag("Treasure"))
-        {
-            SoundEffectManager.PlaySoundEffect(SoundEffectManager.SoundEffectKind.Cash);
-        }
+    }
+    void ResetIsTriggered()
+    {
+        isAlreadyTriggered = false;
     }
 }

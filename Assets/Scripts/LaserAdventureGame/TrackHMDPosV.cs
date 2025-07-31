@@ -8,6 +8,10 @@ public class TrackHMDPosV : LaserAdventureGame
         {
             gameObject.transform.position = GetPlayerPos();
         }
+        else if (GetKinectStat() == KinectStatus.OutOfRange && GetGameState() == GameState.PlayingPostureLaser)
+        {
+            gameObject.transform.position = GetPlayerPos();
+        }
         else
         {
             gameObject.transform.position = new Vector3(1, -100, 1);

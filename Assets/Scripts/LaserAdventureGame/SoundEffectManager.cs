@@ -7,13 +7,18 @@ public class SoundEffectManager : MonoBehaviour
     public enum SoundEffectKind
     {
         LaserCollision,
-        Cash
+        Cash,
+        ApproachingLaserIgnition,
+        Ignition
     };
 
     static private Dictionary<SoundEffectKind, AudioClip> soundEffects = null;
 
     [SerializeField] private AudioClip cashSE;
     [SerializeField] private AudioClip laserCollisionSe;
+    [SerializeField] private AudioClip laserIgnition;
+    [SerializeField] private AudioClip approachingLaserIgnitionBuzzer;
+
     static private AudioSource audioSrc;
 
     void Awake()
@@ -26,6 +31,8 @@ public class SoundEffectManager : MonoBehaviour
     {
         soundEffects[SoundEffectKind.Cash] = cashSE;
         soundEffects[SoundEffectKind.LaserCollision] = laserCollisionSe;
+        soundEffects[SoundEffectKind.Ignition] = laserIgnition;
+        soundEffects[SoundEffectKind.ApproachingLaserIgnition] = approachingLaserIgnitionBuzzer;
     }
 
     static public void PlaySoundEffect(SoundEffectKind kind)

@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public sealed class Player : MonoBehaviour
+public sealed class Player : LaserAdventureGame
 {
     // initalized inspector
     public float movePower;
@@ -28,6 +28,8 @@ public sealed class Player : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         rigidBdy = gameObject.GetComponent<Rigidbody>();
+        Set2DebugMode();
+        SetGameState(GameState.PlayingHMDLaser);
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -57,6 +59,14 @@ public sealed class Player : MonoBehaviour
         }
     }
 
+    public void OllisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Floor"))
+        {
+            isOnGround = true;
+        }
+    }
+
     public void OnLook(InputAction.CallbackContext context)
     {
         mouseDelta = context.ReadValue<Vector2>();
@@ -81,5 +91,7 @@ public sealed class Player : MonoBehaviour
         }
         head.transform.rotation = Quaternion.Euler(vertivalRotationAngle, horizonalRotationAngle, 0);
         rigidBdy.transform.rotation = Quaternion.Euler(0, horizonalRotationAngle, 0);
+
+        SetPlayerPos(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
     }
 }
