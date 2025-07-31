@@ -8,7 +8,8 @@ public class TrackHMDPosV : LaserAdventureGame
         {
             gameObject.transform.position = GetPlayerPos();
         }
-        else if (GetKinectStat() == KinectStatus.OutOfRange && GetGameState() == GameState.PlayingPostureLaser)
+        // when kinect does not tracking player and playing posture laser.
+        else if ((GetGameState() == GameState.PlayingPostureLaser || GetGameState() == GameState.PlayingApproachingPostureLaser) && GetKinectStat() == KinectStatus.OutOfRange)
         {
             gameObject.transform.position = GetPlayerPos();
         }

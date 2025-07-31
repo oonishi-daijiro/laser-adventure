@@ -19,7 +19,7 @@ public class ApproachingLaserManager : InvokePeriodically
         base.Start();
         randomLaserOps = new();
         origianlLaser = origin.GetComponent<ApproachingFromFront>();
-        var instantiateZpos = -1;
+        var instantiateZpos = 3;
         randomLaserOps.Add(new(new Vector3(0, 0.9f, instantiateZpos), Quaternion.Euler(0, 0, -100)));
         randomLaserOps.Add(new(new Vector3(0, 0.9f, instantiateZpos), Quaternion.Euler(0, 0, -86)));
         randomLaserOps.Add(new(new Vector3(0.5f, 2.0f, instantiateZpos), Quaternion.Euler(0, 0, 150)));
@@ -37,6 +37,7 @@ public class ApproachingLaserManager : InvokePeriodically
         var obj = Instantiate(origianlLaser);
         var randomIndex = rand.Next(0, randomLaserOps.Count);
         (Vector3 pos, Quaternion rot) = randomLaserOps[randomIndex];
+        Debug.Log(pos);
         obj.GetComponent<ApproachingFromFront>().Initialize(rot, pos, 0.025f, "Laser");
     }
 

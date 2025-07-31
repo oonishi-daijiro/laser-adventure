@@ -41,7 +41,7 @@ public class UserIntaface : LaserAdventureGame
 
     string FormatLivesAndTimerText()
     {
-        return $"{timerText} \n\n スコア:{GetScore()}";
+        return $"{timerText}   スコア:{GetScore()}";
     }
 
     void Update()
