@@ -24,7 +24,7 @@ public class TextKey : LaserAdventureGame
 
         if (keyboard.digit1Key.isPressed)
         {
-            KeyText.text = "まずは目の前のレーザーを\n動いてよけてみよう！";
+            KeyText.text = "まずは前のレーザーを\n進みながらよけてみよう！";
         }
         else if (keyboard.digit2Key.isPressed)
         {
@@ -64,7 +64,7 @@ public class TextKey : LaserAdventureGame
         }
         else if (keyboard.digit7Key.wasPressedThisFrame)
         {
-            KeyText.text = "チュートリアルはここまで！\n元の位置に戻ってね！";
+            KeyText.text = "チュートリアルはここまで！\n後ろの円のところに戻ってね！";
             if (objectToDisableFor7 != null)
             {
                 objectToDisableFor7.SetActive(false);
