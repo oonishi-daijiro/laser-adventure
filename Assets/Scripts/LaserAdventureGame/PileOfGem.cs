@@ -3,6 +3,7 @@ using UnityEngine;
 public class PileOfGem : MonoBehaviour
 {
     public GameObject target;
+    [SerializeField] int instantiateCount = 20;
 
     public float range;
 
@@ -10,7 +11,7 @@ public class PileOfGem : MonoBehaviour
     {
         if (target != gameObject && target != null)
         {
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < instantiateCount; i++)
             {
                 var randomPosX = target.transform.position.x + (range * Mathf.Cos(RandomAngle()));
                 var randomPosZ = target.transform.position.z + (range * Mathf.Sin(RandomAngle()));
