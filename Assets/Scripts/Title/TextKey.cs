@@ -2,20 +2,28 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using System.Collections;
 
 public class TextKey : LaserAdventureGame
 {
-    [SerializeField] TextMeshProUGUI KeyText;
-    [SerializeField] Transform targetObject;
-    [SerializeField] float moveSpeed = 2f;
+    [SerializeField] private TextMeshProUGUI KeyText;
 
-    [SerializeField] private GameObject objectToDisable;      // 5キーで無効化するオブジェクト
-    [SerializeField] private GameObject objectToDisableFor7;  // 7キーで無効化するオブジェクト
+    [SerializeField] private GameObject objectToDisable;
+    [SerializeField] private GameObject objectToDisableFor7;
 
-    [SerializeField] private AudioSource seFor6Key;           // 6キーで鳴らすSE
+    [SerializeField] private AudioSource seFor6Key;
 
-    private bool isMoving = false;
-    private Vector3 moveDirection = new Vector3(0f, 0f, -1f);
+    [SerializeField] private Image fadeImage; // 白フェード用Image（Canvas内）
+
+    [SerializeField] private float fadeDuration = 1.0f;      // フェード時間
+    [SerializeField] private float delayBeforeFade = 1.0f;   // ボタン押してからフェード開始までの遅延
+
+    private void Start()
+    {
+        // シーン開始時は透明に設定
+        SetFadeAlpha(0f);
+    }
 
     private void Update()
     {
@@ -24,7 +32,7 @@ public class TextKey : LaserAdventureGame
 
         if (keyboard.digit1Key.isPressed)
         {
-            KeyText.text = "まずは目の前のレーザーを\n動いてよけてみよう！";
+            KeyText.text = "まずは前のレーザーを\n進みながらよけてみよう！";
         }
         else if (keyboard.digit2Key.isPressed)
         {
@@ -40,39 +48,24 @@ public class TextKey : LaserAdventureGame
         }
         else if (keyboard.digit5Key.wasPressedThisFrame)
         {
-            if (objectToDisable != null)
-            {
-                objectToDisable.SetActive(false);
-            }
-            else
-            {
-                Debug.LogWarning("5キーで無効化するオブジェクトが設定されていません。");
-            }
+            if (objectToDisable != null) objectToDisable.SetActive(false);
+            else Debug.LogWarning("5キーで無効化するオブジェクトが設定されていません。");
         }
         else if (keyboard.digit6Key.wasPressedThisFrame)
         {
             KeyText.text = "危ない！前からレーザーが来る！\n体を動かしてよけて！";
 
             if (seFor6Key != null && seFor6Key.clip != null)
-            {
                 seFor6Key.PlayOneShot(seFor6Key.clip);
-            }
             else
-            {
                 Debug.LogWarning("6キー用のSEが設定されていません。");
-            }
         }
         else if (keyboard.digit7Key.wasPressedThisFrame)
         {
-            KeyText.text = "チュートリアルはここまで！\n元の位置に戻ってね！";
-            if (objectToDisableFor7 != null)
-            {
-                objectToDisableFor7.SetActive(false);
-            }
-            else
-            {
-                Debug.LogWarning("7キーで無効化するオブジェクトが設定されていません。");
-            }
+            KeyText.text = "チュートリアルはここまで！\n後ろの円のところに戻ってね！";
+
+            if (objectToDisableFor7 != null) objectToDisableFor7.SetActive(false);
+            else Debug.LogWarning("7キーで無効化するオブジェクトが設定されていません。");
         }
         else if (keyboard.digit8Key.isPressed)
         {
@@ -85,20 +78,44 @@ public class TextKey : LaserAdventureGame
         else if (keyboard.digit0Key.wasPressedThisFrame)
         {
             KeyText.text = "任務スタート！";
-            isMoving = true;
-            StartCoroutine(DelayAndLoadScene());
-        }
-
-        if (isMoving && targetObject != null)
-        {
-            targetObject.position += moveDirection * moveSpeed * Time.deltaTime;
+            StartCoroutine(DelayThenFadeAndLoadScene("LaserRoom"));
         }
     }
 
-    System.Collections.IEnumerator DelayAndLoadScene()
+    private IEnumerator DelayThenFadeAndLoadScene(string sceneName)
     {
-        yield return new WaitForSeconds(2f);
-        ResetEverything();
-        SceneManager.LoadScene("LaserRoom");
+        // 1秒遅延
+        yield return new WaitForSeconds(delayBeforeFade);
+
+        // 白フェードイン（透明→白）
+        yield return StartCoroutine(Fade(0f, 1f, fadeDuration));
+
+        // シーン遷移
+        SceneManager.LoadScene(sceneName);
+    }
+
+    private IEnumerator Fade(float startAlpha, float endAlpha, float duration)
+    {
+        float elapsed = 0f;
+        Color startColor = new Color(1f, 1f, 1f, startAlpha);
+        Color endColor = new Color(1f, 1f, 1f, endAlpha);
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            fadeImage.color = Color.Lerp(startColor, endColor, elapsed / duration);
+            yield return null;
+        }
+        fadeImage.color = endColor;
+    }
+
+    private void SetFadeAlpha(float alpha)
+    {
+        if (fadeImage != null)
+        {
+            Color c = fadeImage.color;
+            c.a = alpha;
+            fadeImage.color = c;
+        }
     }
 }
