@@ -13,7 +13,7 @@ public class ScoreDisplayClear : LaserAdventureGame
         scoreText.transform.localScale = Vector3.zero;
 
         // 初期テキストを設定
-        scoreText.text = "スコア：" + finalScore.ToString() + (finalScore > GetHighestScore() ? "最高スコア！" :"");
+        scoreText.text = "スコア：" + finalScore.ToString() + (finalScore > GetHighestScore() ? "\n最高スコア！" :"");
 
         // 1秒後にアニメーション表示
         Invoke(nameof(ShowSuccessScore), 1f);

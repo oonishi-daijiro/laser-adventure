@@ -31,7 +31,7 @@ public class ScoreDisplay : LaserAdventureGame
         {
             elapsed += Time.deltaTime;
             currentScore = (int)Mathf.Lerp(0, finalScore, elapsed / countDuration);
-            scoreText.text = "スコア：" + currentScore.ToString() + (finalScore > GetHighestScore() ? "最高スコア！" : ""); ;
+            scoreText.text = "スコア：" + currentScore.ToString() + (finalScore > GetHighestScore() ? "\n最高スコア！" : ""); ;
             yield return null;
         }
 

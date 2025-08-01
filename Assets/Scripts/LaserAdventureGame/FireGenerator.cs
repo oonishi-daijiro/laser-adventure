@@ -5,6 +5,7 @@ public class FireGenerator : LaserAdventureGame
     [SerializeField] GameObject fire;
     [SerializeField] int count;
     [SerializeField] float margin;
+    bool isAlreadyPositionated = false;
 
     void Start()
     {
@@ -21,6 +22,13 @@ public class FireGenerator : LaserAdventureGame
     void Update()
     {
         if (GetGameState() == GameState.PlayingPostureLaser)
+        {
+            Invoke(nameof(Positionate), 5);
+        }
+    }
+    void Positionate()
+    {
+        if (!isAlreadyPositionated)
         {
             transform.position = new Vector3(0, 100, 0);
         }
