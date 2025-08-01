@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Meta.XR.MultiplayerBlocks.Fusion.Editor;
 using UnityEngine;
 
 public class ApproachingLaserManager : InvokePeriodically
