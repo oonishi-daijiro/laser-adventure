@@ -17,7 +17,6 @@ public class LaserAdventureGame : MonoBehaviour
     static private bool isDebug = false;
     static private int remainTime = limitMin * 60 + limitSec;
     static protected int approachingPostureLaserRemains = approachingPostureLaserCount;
-    static protected string PlayerName = "oonishi";
 
 
 
@@ -31,41 +30,22 @@ public class LaserAdventureGame : MonoBehaviour
     {
         return score;
     }
-
-    static protected void SetPlayerName(string name)
-    {
-        name.Replace(',', '、');
-        PlayerName = name;
-    }
-
-    static protected string GetPlayerName()
-    {
-        return PlayerName;
-    }
-
     static readonly private string AllPlayerNamesKey = "AllPlayerNames";
 
-    static public List<Tuple<string, int>> GetAllPlayersScores()
+    static protected int GetHighestScore()
     {
-        PlayerPrefs.Save();
-        var allPlayerNames = PlayerPrefs.GetString(AllPlayerNamesKey).Split(',');
-        List<Tuple<string, int>> scores = new();
-
-        foreach (var name in allPlayerNames)
-        {
-            var score = PlayerPrefs.GetInt(name);
-            scores.Add(new(name, score));
-        }
-        return scores;
+        var score = PlayerPrefs.GetInt("HighestScore");
+        return score;
     }
 
     static public void ResetEverything()
     {
-        var names = PlayerPrefs.GetString("AllPlayerNames");
-        PlayerPrefs.SetString("AllPlayerNames", $"{names},{PlayerName}");
-        PlayerPrefs.SetInt(PlayerName, GetScore());
-        PlayerPrefs.Save();
-        PlayerName = "";
+        if (score > GetHighestScore())
+        {
+            PlayerPrefs.SetInt("HighestScore", score);
+            PlayerPrefs.Save();
+        }
+
         lives = defaultLives;
         approachingPostureLaserRemains = approachingPostureLaserCount;
         score = 0;
