@@ -61,6 +61,10 @@ public class UserIntaface : LaserAdventureGame
     {
         remainSec--;
         SetRemainTime(remainSec);
+        if (remainSec <= 0)
+        {
+            remainSec = 0;
+        }
 
         (int min, int sec) = Sec2Min(remainSec);
         timerText = $"タイム:{min}:{sec.ToString("00")}";

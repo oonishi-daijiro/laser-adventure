@@ -30,7 +30,6 @@ public class LaserAdventureGame : MonoBehaviour
     {
         return score;
     }
-    static readonly private string AllPlayerNamesKey = "AllPlayerNames";
 
     static protected int GetHighestScore()
     {
@@ -51,6 +50,11 @@ public class LaserAdventureGame : MonoBehaviour
         score = 0;
         SetGameState(GameState.Playing);
         SetKinectStat(KinectStatus.OutOfRange);
+    }
+    static protected void ResetHighestScore()
+    {
+        PlayerPrefs.SetInt("HighestScore", 0);
+        PlayerPrefs.Save();
     }
 
     protected enum GameState
@@ -185,7 +189,7 @@ public class LaserAdventureGame : MonoBehaviour
     static protected void SetRemainTime(int time)
     {
         remainTime = time;
-        if (remainTime <= 0)
+        if (remainTime <= 0 && GetGameState() != GameState.GameOver)
         {
             remainTime = 0;
             SetGameState(GameState.GameOver);
