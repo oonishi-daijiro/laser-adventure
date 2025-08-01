@@ -36,7 +36,7 @@ public class TextKey : LaserAdventureGame
         }
         else if (keyboard.digit2Key.isPressed)
         {
-            KeyText.text = "炎に当たるとダメージを\n食らうから気を付けよう！";
+            KeyText.text = "炎の先にはいかないでね！\n近づくとダメージをくらうよ！";
         }
         else if (keyboard.digit3Key.isPressed)
         {

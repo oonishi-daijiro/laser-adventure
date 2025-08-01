@@ -208,6 +208,7 @@ public class LaserAdventureGame : MonoBehaviour
         remainTime = time;
         if (remainTime <= 0)
         {
+            remainTime = 0;
             SetGameState(GameState.GameOver);
         }
     }
