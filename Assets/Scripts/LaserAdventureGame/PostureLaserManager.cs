@@ -14,7 +14,11 @@ public class PostureLaserManager : LaserAdventureGame
     {
         if (GetGameState() == GameState.PlayingPostureLaser)
         {
-            gameObject.transform.position = defaultPos;
+            Invoke(nameof(Set2DefaultPos), 5);
         }
+    }
+    void Set2DefaultPos()
+    {
+        gameObject.transform.position = defaultPos;
     }
 }

@@ -6,12 +6,6 @@ using UnityEngine.SceneManagement;
 public class LaserAdventureGame : MonoBehaviour
 {
 
-    public enum SEKinds
-    {
-        LaserColl,
-        Cash
-    }
-
     static protected readonly int defaultLives = 8;
     static protected readonly Vector3 initialHMDPosition = new(0, 0, -9.5f);
     static protected readonly int limitMin = 3;
@@ -29,7 +23,7 @@ public class LaserAdventureGame : MonoBehaviour
 
     public enum TreasureScores
     {
-        Gem = 1000, Coin = 100, Cash = 300, Gold = 500,
+        Coin = 100, TwoCoin = 200, ThreeCoin = 300
     };
 
     static private int score = 0;
@@ -106,8 +100,13 @@ public class LaserAdventureGame : MonoBehaviour
     {
         if (state == GameState.Completed)
         {
+            score += GetPlayerLives() * 200;
             SceneManager.LoadScene("GameClear");
             return;
+        }
+        else if (state == GameState.GameOver)
+        {
+            score += GetPlayerLives() * 200;
         }
         else if (state == GameState.PlayingPostureLaser || state == GameState.PlayingApproachingPostureLaser)
         {
